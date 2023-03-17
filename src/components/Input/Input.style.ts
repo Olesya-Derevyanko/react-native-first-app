@@ -28,6 +28,7 @@ const styles = StyleSheet.create({
 
   errorText: {
     color: 'red',
+    fontSize: 12,
   },
 });
 

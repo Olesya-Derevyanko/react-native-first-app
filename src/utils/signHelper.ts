@@ -1,4 +1,4 @@
-import { ResponseType, UserType } from '../types/userTypes';
+import { FormSignInType, FormSignUpType, UserType } from '../types/userTypes';
 import { AsyncStorageItem } from './AsyncStorageHelper';
 
 export const usersStorage = new AsyncStorageItem<UserType[]>('users');
@@ -6,13 +6,11 @@ export const authorizedUserStorage = new AsyncStorageItem<string>(
   'authorized-user',
 );
 
-export const signUpToAsyncStorage = async (
-  login: string,
-  password: string,
-): Promise<ResponseType> => {
+export const signUpToAsyncStorage = async (value: FormSignUpType) => {
+  const { login, password } = value;
   const users: UserType[] = (await usersStorage.get()) || [];
   if (users.findIndex(item => item.login === login) !== -1) {
-    return { type: 'error', message: 'This login already exists' };
+    throw new Error('This login already exists');
   }
   const newUser: UserType = {
     name: '',
@@ -25,35 +23,40 @@ export const signUpToAsyncStorage = async (
   users.push(newUser);
   usersStorage.set(users);
   authorizedUserStorage.set(login);
-  return { type: 'success', message: 'ok' };
+  return newUser;
 };
 
-export const signInToAsyncStorage = async (
-  login: string,
-  password: string,
-): Promise<ResponseType> => {
+export const signInToAsyncStorage = async (value: FormSignInType) => {
+  const { login, password } = value;
   const users: UserType[] = (await usersStorage.get()) || [];
   const userIndex = users.findIndex(item => item.login === login);
   if (userIndex === -1) {
-    return { type: 'error', message: 'There is no user with this login' };
+    throw new Error('There is no user with this login');
   }
   if (users[userIndex].password !== password) {
-    return { type: 'error', message: 'Invalid password' };
+    throw new Error('Invalid password');
   }
   authorizedUserStorage.set(login);
-  return { type: 'success', message: 'ok' };
+  return users[userIndex];
 };
 
 export const checkAuthUser = async () => {
   return await authorizedUserStorage.get();
 };
 
-export const checkAuthorizedToAsyncStorage =
-  async (): Promise<ResponseType> => {
-    const authorizedUser: string = await authorizedUserStorage.get();
-    if (authorizedUser !== null) {
-      // add to redux store
-      return { type: 'success', message: 'ok' };
-    }
-    return { type: 'error', message: 'Invalid password' };
-  };
+export const logoutFromAsyncStorage = async () => {
+  await authorizedUserStorage.remove();
+};
+
+export const checkAuthorizedToAsyncStorage = async () => {
+  const authorizedUser: string = await authorizedUserStorage.get();
+  if (authorizedUser === null) {
+    throw new Error('Invalid password');
+  }
+  const users: UserType[] = (await usersStorage.get()) || [];
+  const authUser = users.find(item => item.login === authorizedUser);
+  if (!authUser?.login.length) {
+    throw new Error('User not found');
+  }
+  return authUser;
+};

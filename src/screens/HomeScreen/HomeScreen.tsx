@@ -1,20 +1,26 @@
 import React from 'react';
 import { SafeAreaView } from 'react-native';
-import { HomeScreenStyle } from './HomeScreen.style';
-import StyledTitle from '../../components/StyledTitle/StyledTitle';
-import { NativeStackNavigationProp } from '@react-navigation/native-stack';
-import { NavigatorRootStackParamListType } from '../../types/navigationTypes';
-import { useNavigation } from '@react-navigation/native';
+import styles from './HomeScreen.style';
+import Text from '../../components/Text/Text';
+import Button from '../../components/Button/Button';
+import { useAppDispatch } from '../../store/hooks';
+import userThunk from '../../store/user/userThunk';
 
 const HomeScreen = () => {
-  const navigate =
-    useNavigation<
-      NativeStackNavigationProp<NavigatorRootStackParamListType, 'SignIn'>
-    >();
+  const dispatch = useAppDispatch();
+
+  const onPressLogOut = async () => {
+    try {
+      await dispatch(userThunk.logOut()).unwrap();
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   return (
-    <SafeAreaView style={HomeScreenStyle.container}>
-      <StyledTitle>Home</StyledTitle>
+    <SafeAreaView style={styles.container}>
+      <Text isHeader>Home</Text>
+      <Button title="log out" onPress={onPressLogOut} />
     </SafeAreaView>
   );
 };

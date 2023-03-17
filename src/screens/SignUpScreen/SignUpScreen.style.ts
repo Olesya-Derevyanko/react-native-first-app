@@ -1,6 +1,6 @@
 import { StyleSheet } from 'react-native';
 
-export const SignUpScreenStyle = StyleSheet.create({
+const styles = StyleSheet.create({
   container: {
     backgroundColor: 'white',
     flex: 1,
@@ -22,3 +22,5 @@ export const SignUpScreenStyle = StyleSheet.create({
     fontWeight: '700',
   },
 });
+
+export default styles;

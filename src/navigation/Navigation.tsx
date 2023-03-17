@@ -1,35 +1,28 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { NavigatorRootStackParamListType } from '../types/navigationTypes';
 import AuthStack from './AuthStack';
 import { checkAuthUser } from '../utils/signHelper';
 import RootStack from './RootStack';
+import { useAppDispatch, useAppSelector } from '../store/hooks';
+import userThunk from '../store/user/userThunk';
 
 const Stack = createNativeStackNavigator<NavigatorRootStackParamListType>();
 
 const Navigation = () => {
-  const [isAuth, setIsAuth] = useState(false);
+  const dispatch = useAppDispatch();
+  const user = useAppSelector(state => state.userSlice.user);
+
   useEffect(() => {
     (async () => {
       const login = await checkAuthUser();
       if (login) {
-        setIsAuth(true);
+        await dispatch(userThunk.loginByLogin()).unwrap();
         return;
       }
-      setIsAuth(false);
     })();
-  }, []);
-
-  // if (!isAuth) {
-  //   return (
-  //     <NavigationContainer>
-  //       <Stack.Navigator>
-  //         <Stack.Screen name="Root" component={RootStack} />
-  //       </Stack.Navigator>
-  //     </NavigationContainer>
-  //   );
-  // }
+  }, [dispatch]);
 
   return (
     <NavigationContainer>
@@ -37,7 +30,7 @@ const Navigation = () => {
         screenOptions={{
           headerShown: false,
         }}>
-        {isAuth ? (
+        {user.login ? (
           <Stack.Screen name="Root" component={RootStack} />
         ) : (
           <Stack.Screen name="AuthStack" component={AuthStack} />

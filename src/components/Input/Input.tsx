@@ -1,41 +1,46 @@
 import { FC, useEffect, useState } from 'react';
 import React from 'react';
-import { View, Text, TextInput, KeyboardTypeOptions } from 'react-native';
+import {
+  View,
+  TextInput,
+  KeyboardTypeOptions,
+  TextInputProps,
+} from 'react-native';
 
-import StyledInputStyles from './StyledInput.style';
+import styles from './Input.style';
 import { Noop } from 'react-hook-form';
+import Text from '../Text/Text';
 
-type PropType = {
+interface IProps extends TextInputProps {
   textValue: string;
   placeHolder: string;
   error?: string;
-  onChange(newText: string): void;
-  isTouched?: boolean;
+  onChangeText(newText: string): void;
   onBlur?: Noop;
   type?: KeyboardTypeOptions;
   isPassword?: boolean;
-};
+}
 
-const StyledInput: FC<PropType> = props => {
+const Input: FC<IProps> = props => {
   const {
     textValue,
-    onChange,
+    onChangeText,
     placeHolder,
     error,
     type,
-    isTouched,
     isPassword,
+    ...inputProps
   } = props;
   const [activeStyle, setActiveStyle] = useState({});
   const [isFocus, setIsFocus] = useState(false);
 
   const onSetStyles = () => {
     setIsFocus(true);
-    setActiveStyle(StyledInputStyles.inputActive);
+    setActiveStyle(styles.inputActive);
   };
   const onUnsetStyles = () => {
     if (error) {
-      setActiveStyle(StyledInputStyles.inputError);
+      setActiveStyle(styles.inputError);
     } else {
       setActiveStyle({});
     }
@@ -44,35 +49,37 @@ const StyledInput: FC<PropType> = props => {
     }
     setIsFocus(false);
   };
+
   useEffect(() => {
     if (error?.length && !isFocus) {
-      setActiveStyle(StyledInputStyles.inputError);
+      setActiveStyle(styles.inputError);
     }
-  }, [error, isFocus, isTouched]);
+  }, [error, isFocus]);
 
   return (
-    <View style={StyledInputStyles.inputContainer}>
-      <View style={StyledInputStyles.textSection}>
+    <View style={styles.inputContainer}>
+      <View style={styles.textSection}>
         <Text>{placeHolder}</Text>
       </View>
-      <View style={StyledInputStyles.section}>
+      <View style={styles.section}>
         <TextInput
+          {...inputProps}
           keyboardType={type}
           onFocus={onSetStyles}
           onBlur={onUnsetStyles}
-          style={{ ...StyledInputStyles.input, ...activeStyle }}
-          onChangeText={onChange}
+          style={[styles.input, activeStyle]}
+          onChangeText={onChangeText}
           defaultValue={textValue}
           secureTextEntry={isPassword}
         />
       </View>
-      {error?.length && isTouched ? (
-        <View style={StyledInputStyles.textSection}>
-          <Text style={StyledInputStyles.errorText}>{error}</Text>
+      {error?.length && (
+        <View style={styles.textSection}>
+          <Text style={styles.errorText}>{error}</Text>
         </View>
-      ) : null}
+      )}
     </View>
   );
 };
 
-export default StyledInput;
+export default Input;

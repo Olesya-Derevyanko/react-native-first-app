@@ -5,6 +5,7 @@ export type UserType = {
   dob?: Date;
   theme?: string;
   password: string;
+  avatar?: string;
 };
 
 export type ResponseType = {
@@ -21,4 +22,8 @@ export type FormSignUpType = {
 export type FormSignInType = {
   login: string;
   password: string;
+};
+
+export type UserSliceType = {
+  user: UserType;
 };

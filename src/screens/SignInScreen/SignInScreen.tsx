@@ -1,14 +1,13 @@
 import React from 'react';
-import { SafeAreaView, Text, View } from 'react-native';
-import { SignInScreenStyle } from './SignInScreen.style';
-import StyledButton from '../../components/StyledButton/StyledButton';
-import StyledTitle from '../../components/StyledTitle/StyledTitle';
-import StyledInput from '../../components/StyledInput/StyledInput';
+import { SafeAreaView, View } from 'react-native';
+import styles from './SignInScreen.style';
+import Button from '../../components/Button/Button';
+import Text from '../../components/Text/Text';
+import Input from '../../components/Input/Input';
 import { FormSignInType } from '../../types/userTypes';
 import { useForm, Controller } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { loginSchema } from '../../types/validationSchemes';
-import { signInToAsyncStorage } from '../../utils/signHelper';
 import {
   checkIsLoginErrorMessage,
   checkIsPasswordErrorMessage,
@@ -16,8 +15,11 @@ import {
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { NavigatorRootStackParamListType } from '../../types/navigationTypes';
 import { useNavigation } from '@react-navigation/native';
+import { useAppDispatch } from '../../store/hooks';
+import userThunk from '../../store/user/userThunk';
 
 const SignInScreen = () => {
+  const dispatch = useAppDispatch();
   const navigate =
     useNavigation<
       NativeStackNavigationProp<NavigatorRootStackParamListType, 'SignIn'>
@@ -26,7 +28,7 @@ const SignInScreen = () => {
     control,
     handleSubmit,
     setError,
-    formState: { errors, touchedFields },
+    formState: { errors },
   } = useForm<FormSignInType>({
     mode: 'all',
     resolver: yupResolver(loginSchema),
@@ -36,68 +38,66 @@ const SignInScreen = () => {
     },
   });
 
-  const onClickSignIn = async (data: FormSignInType) => {
-    const response = await signInToAsyncStorage(data.login, data.password);
-    if (response.type === 'error') {
-      if (checkIsLoginErrorMessage(response.message)) {
-        setError('login', { message: response.message });
-      }
-      if (checkIsPasswordErrorMessage(response.message)) {
-        setError('password', { message: response.message });
+  const onPressSignIn = async (data: FormSignInType) => {
+    try {
+      await dispatch(userThunk.loginByLoginPass(data)).unwrap();
+    } catch (error) {
+      if (error) {
+        if (checkIsLoginErrorMessage(error as string)) {
+          setError('login', { message: error as string });
+        }
+        if (checkIsPasswordErrorMessage(error as string)) {
+          setError('password', { message: error as string });
+        }
       }
     }
   };
 
-  const onClickToSignUp = () => {
+  const onPressToSignUp = () => {
     navigate.navigate('SignUp');
   };
 
   return (
-    <SafeAreaView style={SignInScreenStyle.container}>
-      <StyledTitle>Log In</StyledTitle>
-      <View style={SignInScreenStyle.section}>
+    <SafeAreaView style={styles.container}>
+      <Text isHeader>Log In</Text>
+      <View style={styles.section}>
         <Controller
           control={control}
           render={({ field: { onChange, onBlur, value } }) => (
-            <StyledInput
+            <Input
               textValue={value}
-              onChange={onChange}
+              onChangeText={onChange}
               placeHolder="Login"
               error={errors.login?.message}
               onBlur={onBlur}
-              isTouched={touchedFields.login}
             />
           )}
           name="login"
         />
       </View>
-      <View style={SignInScreenStyle.section}>
+      <View style={styles.section}>
         <Controller
           control={control}
           render={({ field: { onChange, onBlur, value } }) => (
-            <StyledInput
+            <Input
               textValue={value}
-              onChange={onChange}
+              onChangeText={onChange}
               placeHolder="Password"
               error={errors.password?.message}
               onBlur={onBlur}
-              isTouched={touchedFields.password}
               isPassword
             />
           )}
           name="password"
         />
       </View>
-      <View style={SignInScreenStyle.section}>
-        <StyledButton
-          textValue={'Log In'}
-          onPress={handleSubmit(onClickSignIn)}
-        />
+      <View style={styles.section}>
+        <Button onPress={handleSubmit(onPressSignIn)} title="Log In" />
       </View>
 
-      <View style={[SignInScreenStyle.section, SignInScreenStyle.lastSection]}>
+      <View style={[styles.section, styles.lastSection]}>
         <Text>If you don't have an account</Text>
-        <Text style={SignInScreenStyle.link} onPress={onClickToSignUp}>
+        <Text style={styles.link} onPress={onPressToSignUp}>
           Sign Up
         </Text>
       </View>
