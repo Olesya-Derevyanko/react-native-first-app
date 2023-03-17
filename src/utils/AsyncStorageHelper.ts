@@ -1,4 +1,4 @@
-import { AsyncStorage } from 'react-native';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 export class AsyncStorageItem<D> {
   private key: string;
@@ -8,9 +8,9 @@ export class AsyncStorageItem<D> {
   }
 
   get = async (): Promise<Awaited<D>> => {
-    const storedValue = (await AsyncStorage.getItem(this.key)) || '';
-    const parsedValue = JSON.parse(storedValue as string);
-
+    const storedValue: string | null = await AsyncStorage.getItem(this.key);
+    const parsedValue =
+      typeof storedValue === 'string' ? JSON.parse(storedValue) : null;
     return parsedValue;
   };
 

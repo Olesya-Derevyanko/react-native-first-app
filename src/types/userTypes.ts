@@ -1,13 +1,24 @@
 export type UserType = {
-  name: string;
+  name?: string;
   login: string;
-  email: string;
+  email?: string;
   dob?: Date;
-  theme: string;
+  theme?: string;
   password: string;
 };
 
 export type ResponseType = {
   type: string;
   message: string;
+};
+
+export type FormSignUpType = {
+  login: string;
+  password: string;
+  repeatPassword: string;
+};
+
+export type FormSignInType = {
+  login: string;
+  password: string;
 };

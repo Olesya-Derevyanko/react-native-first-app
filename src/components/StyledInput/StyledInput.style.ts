@@ -4,6 +4,9 @@ const styles = StyleSheet.create({
   inputContainer: {
     paddingHorizontal: 25,
   },
+  textSection: {
+    paddingLeft: 16,
+  },
   section: {
     marginTop: 5,
   },
@@ -17,7 +20,14 @@ const styles = StyleSheet.create({
 
   inputActive: {
     borderColor: '#666373',
-    shadowColor: 'inset 0 -2px 5px rgba(0, 0, 0, 0.03)',
+  },
+
+  inputError: {
+    borderColor: 'red',
+  },
+
+  errorText: {
+    color: 'red',
   },
 });
 

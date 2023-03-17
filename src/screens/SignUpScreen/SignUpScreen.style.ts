@@ -2,6 +2,7 @@ import { StyleSheet } from 'react-native';
 
 export const SignUpScreenStyle = StyleSheet.create({
   container: {
+    backgroundColor: 'white',
     flex: 1,
     justifyContent: 'center',
   },

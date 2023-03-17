@@ -9,11 +9,10 @@
  */
 
 import React from 'react';
-import SignInScreen from './src/screens/SignInScreen/SignInScreen';
-import SignUpScreen from './src/screens/SignUpScreen/SignUpScreen';
+import Navigation from './src/navigation/Navigation';
 
 const App = () => {
-  return <SignUpScreen />;
+  return <Navigation />;
 };
 
 export default App;

@@ -1,6 +1,6 @@
 import { StyleSheet } from 'react-native';
 
-export const SignInScreenStyle = StyleSheet.create({
+export const HomeScreenStyle = StyleSheet.create({
   container: {
     backgroundColor: 'white',
     flex: 1,
