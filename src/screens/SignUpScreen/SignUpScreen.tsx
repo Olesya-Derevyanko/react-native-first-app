@@ -1,6 +1,6 @@
 import React from 'react';
 import { SafeAreaView, View } from 'react-native';
-import styles from './SignUpScreen.style';
+import createStyles from './SignUpScreen.style';
 import Button from '../../components/Button/Button';
 import Text from '../../components/Text/Text';
 import Input from '../../components/Input/Input';
@@ -14,8 +14,10 @@ import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { NavigatorRootStackParamListType } from '../../types/navigationTypes';
 import { useAppDispatch } from '../../store/hooks';
 import userThunk from '../../store/user/userThunk';
+import { useThemeAwareObject } from '../../theme/useThemeAwareObject';
 
 const SignUpScreen = () => {
+  const styles = useThemeAwareObject(createStyles);
   const dispatch = useAppDispatch();
   const navigate =
     useNavigation<

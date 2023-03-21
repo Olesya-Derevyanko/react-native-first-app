@@ -1,17 +1,21 @@
 import { StyleSheet } from 'react-native';
+import { Theme } from '../../theme/theme.interface';
 
-const styles = StyleSheet.create({
-  header: {
-    color: 'black',
-    fontSize: 30,
-    fontWeight: '900',
-    alignSelf: 'center',
-  },
-  text: {
-    color: 'black',
-    fontSize: 15,
-    fontWeight: '500',
-  },
-});
+const createStyles = (theme: Theme) => {
+  const styles = StyleSheet.create({
+    header: {
+      color: theme.colors.titleColor,
+      fontSize: 30,
+      fontWeight: '900',
+      alignSelf: 'center',
+    },
+    text: {
+      color: theme.colors.textColor,
+      fontSize: 15,
+      fontWeight: '500',
+    },
+  });
+  return styles;
+};
 
-export default styles;
+export default createStyles;

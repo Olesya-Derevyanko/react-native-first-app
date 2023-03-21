@@ -3,7 +3,6 @@ export type UserType = {
   login: string;
   email?: string;
   dob?: Date;
-  theme?: string;
   password: string;
   avatar?: string;
 };
@@ -26,4 +25,5 @@ export type FormSignInType = {
 
 export type UserSliceType = {
   user: UserType;
+  theme: string;
 };

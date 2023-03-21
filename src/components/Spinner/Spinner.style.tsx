@@ -8,20 +8,9 @@ const createStyles = (theme: Theme) => {
       flex: 1,
       justifyContent: 'center',
     },
-    section: {
-      paddingTop: 15,
-    },
 
-    lastSection: {
-      display: 'flex',
-      flexDirection: 'row',
-      alignItems: 'center',
-      justifyContent: 'center',
-    },
-    link: {
-      paddingLeft: 5,
+    spinner: {
       color: theme.colors.primary,
-      fontWeight: '700',
     },
   });
   return styles;

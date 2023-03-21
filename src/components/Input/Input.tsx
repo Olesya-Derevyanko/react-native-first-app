@@ -7,9 +7,10 @@ import {
   TextInputProps,
 } from 'react-native';
 
-import styles from './Input.style';
+import createStyles from './Input.style';
 import { Noop } from 'react-hook-form';
 import Text from '../Text/Text';
+import { useThemeAwareObject } from '../../theme/useThemeAwareObject';
 
 interface IProps extends TextInputProps {
   textValue: string;
@@ -22,6 +23,7 @@ interface IProps extends TextInputProps {
 }
 
 const Input: FC<IProps> = props => {
+  const styles = useThemeAwareObject(createStyles);
   const {
     textValue,
     onChangeText,
@@ -54,7 +56,7 @@ const Input: FC<IProps> = props => {
     if (error?.length && !isFocus) {
       setActiveStyle(styles.inputError);
     }
-  }, [error, isFocus]);
+  }, [error, isFocus, styles.inputError]);
 
   return (
     <View style={styles.inputContainer}>

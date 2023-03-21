@@ -1,12 +1,14 @@
 import React from 'react';
 import { SafeAreaView } from 'react-native';
-import styles from './HomeScreen.style';
+import createStyles from './HomeScreen.style';
 import Text from '../../components/Text/Text';
 import Button from '../../components/Button/Button';
 import { useAppDispatch } from '../../store/hooks';
 import userThunk from '../../store/user/userThunk';
+import { useThemeAwareObject } from '../../theme/useThemeAwareObject';
 
 const HomeScreen = () => {
+  const styles = useThemeAwareObject(createStyles);
   const dispatch = useAppDispatch();
 
   const onPressLogOut = async () => {

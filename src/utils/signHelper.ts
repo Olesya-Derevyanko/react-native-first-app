@@ -13,11 +13,8 @@ export const signUpToAsyncStorage = async (value: FormSignUpType) => {
     throw new Error('This login already exists');
   }
   const newUser: UserType = {
-    name: '',
     login,
-    email: '',
     dob: undefined,
-    theme: 'light',
     password,
   };
   users.push(newUser);

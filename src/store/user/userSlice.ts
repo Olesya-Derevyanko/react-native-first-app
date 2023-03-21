@@ -1,4 +1,3 @@
-// import type { PayloadAction } from '@reduxjs/toolkit';
 import { createSlice } from '@reduxjs/toolkit';
 import type { UserSliceType } from '../../types/userTypes';
 import userThunk from './userThunk';
@@ -8,12 +7,17 @@ const initialState: UserSliceType = {
     login: '',
     password: '',
   },
+  theme: '',
 };
 
 export const userSlice = createSlice({
   name: 'userSlice',
   initialState,
-  reducers: {},
+  reducers: {
+    setActualTheme: (state, { payload }) => {
+      state.theme = payload;
+    },
+  },
   extraReducers: builder => {
     builder.addCase(
       userThunk.loginByLoginPass.fulfilled,
@@ -43,5 +47,5 @@ export const userSlice = createSlice({
   },
 });
 
-// export const { logout } = userSlice.actions;
+export const { setActualTheme } = userSlice.actions;
 export default userSlice.reducer;
