@@ -18,6 +18,20 @@ const createStyles = (theme: Theme) => {
       alignItems: 'center',
       justifyContent: 'center',
     },
+
+    topTabBar: {
+      backgroundColor: theme.colors.background,
+    },
+
+    topTabIndicator: {
+      backgroundColor: theme.colors.textColor,
+    },
+
+    tabText: {
+      textTransform: 'capitalize',
+      fontSize: 15,
+      fontWeight: '600',
+    },
   });
   return styles;
 };
