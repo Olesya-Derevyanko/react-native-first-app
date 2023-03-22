@@ -10,6 +10,8 @@ import { View, TouchableOpacity } from 'react-native';
 import Text from '../../components/Text/Text';
 import { useThemeAwareObject } from '../../theme/useThemeAwareObject';
 import createStyles from './TabBar.style';
+import HomeIcon from '../../assets/icons/home.svg';
+import ProfileIcon from '../../assets/icons/user.svg';
 
 type PropsType = {
   state: TabNavigationState<ParamListBase>;
@@ -19,6 +21,23 @@ type PropsType = {
 
 const TabBar: React.FC<PropsType> = ({ state, descriptors, navigation }) => {
   const styles = useThemeAwareObject(createStyles);
+
+  const currentIcon = (option: {
+    name: string;
+    color: string;
+    focused: boolean;
+    width: number;
+    height: number;
+  }) => {
+    switch (option.name) {
+      case 'Home':
+        return <HomeIcon {...option} />;
+      case 'Profile':
+        return <ProfileIcon {...option} />;
+      default:
+        return null;
+    }
+  };
   return (
     <View style={styles.container}>
       {state.routes.map((route, index) => {
@@ -63,14 +82,15 @@ const TabBar: React.FC<PropsType> = ({ state, descriptors, navigation }) => {
             style={
               isFocused ? styles.tabSectionActive : styles.tabSectionInactive
             }>
-            {options.tabBarIcon &&
-              options.tabBarIcon({
-                color: isFocused
-                  ? styles.activeIcon.color
-                  : styles.inactiveIcon.color,
-                focused: isFocused,
-                size: 23,
-              })}
+            {currentIcon({
+              color: isFocused
+                ? styles.activeIcon.color
+                : styles.inactiveIcon.color,
+              focused: isFocused,
+              width: 23,
+              height: 23,
+              name: route.name,
+            })}
             <Text
               style={
                 isFocused ? styles.activeIcon : styles.inactiveIcon

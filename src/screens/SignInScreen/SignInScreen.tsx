@@ -7,7 +7,7 @@ import Input from '../../components/Input/Input';
 import { FormSignInType } from '../../types/userTypes';
 import { useForm, Controller } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
-import { loginSchema } from '../../types/validationSchemes';
+import { loginSchema } from '../../validation/validationSchemes';
 import {
   checkIsLoginErrorMessage,
   checkIsPasswordErrorMessage,
@@ -45,11 +45,11 @@ const SignInScreen = () => {
       await dispatch(userThunk.loginByLoginPass(data)).unwrap();
     } catch (error) {
       if (error) {
-        if (checkIsLoginErrorMessage(error as string)) {
-          setError('login', { message: error as string });
+        if (checkIsLoginErrorMessage(error.message as string)) {
+          setError('login', { message: error.message as string });
         }
-        if (checkIsPasswordErrorMessage(error as string)) {
-          setError('password', { message: error as string });
+        if (checkIsPasswordErrorMessage(error.message as string)) {
+          setError('password', { message: error.message as string });
         }
       }
     }

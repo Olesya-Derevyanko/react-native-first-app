@@ -16,7 +16,6 @@ interface IProps extends TextInputProps {
   textValue: string;
   placeHolder: string;
   error?: string;
-  onChangeText?(newText: string): void;
   onBlur?: Noop;
   type?: KeyboardTypeOptions;
   isPassword?: boolean;

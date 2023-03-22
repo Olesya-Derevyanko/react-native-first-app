@@ -13,8 +13,6 @@ const Stack = createNativeStackNavigator<NavigatorRootStackParamListType>();
 
 const Navigation = () => {
   const [isLoading, setIsLoading] = useState(true);
-  const [initialRoute, setInitialRoute] =
-    useState<keyof NavigatorRootStackParamListType>('All');
   const dispatch = useAppDispatch();
   const user = useAppSelector(state => state.userSlice.user);
 
@@ -30,15 +28,6 @@ const Navigation = () => {
     })();
   }, [dispatch, isLoading]);
 
-  const Root = () => {
-    return (
-      <RootStack
-        initialRoute={initialRoute}
-        setInitialRoute={setInitialRoute}
-      />
-    );
-  };
-
   if (isLoading) {
     return <Spinner />;
   }
@@ -50,7 +39,7 @@ const Navigation = () => {
           headerShown: false,
         }}>
         {user.login ? (
-          <Stack.Screen name="Root" component={Root} />
+          <Stack.Screen name="Root" component={RootStack} />
         ) : (
           <Stack.Screen name="AuthStack" component={AuthStack} />
         )}

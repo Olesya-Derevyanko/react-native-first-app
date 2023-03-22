@@ -6,26 +6,14 @@ import SignUpScreen from '../screens/SignUpScreen/SignUpScreen';
 
 const Stack = createNativeStackNavigator<NavigatorRootStackParamListType>();
 
-const routes: Array<React.ComponentProps<typeof Stack.Screen>> = [
-  {
-    name: 'SignIn',
-    component: SignInScreen,
-  },
-  {
-    name: 'SignUp',
-    component: SignUpScreen,
-  },
-];
-
 const AuthStack = () => {
   return (
     <Stack.Navigator
       screenOptions={{
         headerShown: false,
       }}>
-      {routes.map(routeConfig => (
-        <Stack.Screen key={routeConfig.name} {...routeConfig} />
-      ))}
+      <Stack.Screen name="SignIn" component={SignInScreen} />
+      <Stack.Screen name="SignUp" component={SignUpScreen} />
     </Stack.Navigator>
   );
 };

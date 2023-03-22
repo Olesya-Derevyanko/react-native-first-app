@@ -41,6 +41,13 @@ export const userSlice = createSlice({
       state.user = payload;
     });
 
+    builder.addCase(userThunk.changeAvatar.fulfilled, (state, { payload }) => {
+      if (!payload) {
+        return;
+      }
+      state.user = payload;
+    });
+
     builder.addCase(userThunk.logOut.fulfilled, () => {
       return initialState;
     });

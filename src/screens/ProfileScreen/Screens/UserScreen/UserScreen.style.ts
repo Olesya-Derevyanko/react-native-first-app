@@ -36,7 +36,7 @@ const createStyles = (theme: Theme) => {
 
     avatarPhoto: {
       alignSelf: 'center',
-      color: theme.colors.primary,
+      color: theme.colors.background,
       borderRadius: 25,
     },
 
@@ -44,7 +44,7 @@ const createStyles = (theme: Theme) => {
       width: 40,
       height: 40,
       position: 'absolute',
-      backgroundColor: theme.colors.background,
+      backgroundColor: theme.colors.primary,
       color: theme.colors.textColor,
       borderRadius: 25,
       alignItems: 'center',

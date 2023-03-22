@@ -28,7 +28,7 @@ export interface Props {
 export const ThemeProvider = React.memo<Props>(props => {
   const [theme, setTheme] = React.useState<Theme>(props.initial);
 
-  const SetThemeCallback = React.useCallback((newTheme: Theme) => {
+  const setThemeCallback = React.useCallback((newTheme: Theme) => {
     setTheme((currentTheme: Theme) => {
       if (currentTheme.id === newTheme.id) {
         return currentTheme;
@@ -38,7 +38,7 @@ export const ThemeProvider = React.memo<Props>(props => {
     });
   }, []);
 
-  const ToggleThemeCallback = React.useCallback(() => {
+  const toggleThemeCallback = React.useCallback(() => {
     setTheme(currentTheme => {
       if (currentTheme.id === DEFAULT_LIGHT_THEME_ID) {
         return DEFAULT_DARK_THEME;
@@ -50,17 +50,17 @@ export const ThemeProvider = React.memo<Props>(props => {
     });
   }, []);
 
-  const MemoizedValue = React.useMemo(() => {
+  const memoizedValue = React.useMemo(() => {
     const value: ProvidedValue = {
       theme,
-      setTheme: SetThemeCallback,
-      toggleTheme: ToggleThemeCallback,
+      setTheme: setThemeCallback,
+      toggleTheme: toggleThemeCallback,
     };
     return value;
-  }, [theme, SetThemeCallback, ToggleThemeCallback]);
+  }, [theme, setThemeCallback, toggleThemeCallback]);
 
   return (
-    <Context.Provider value={MemoizedValue}>{props.children}</Context.Provider>
+    <Context.Provider value={memoizedValue}>{props.children}</Context.Provider>
   );
 });
 

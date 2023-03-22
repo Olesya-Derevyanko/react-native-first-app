@@ -1,28 +1,38 @@
 import React from 'react';
-import { SafeAreaView } from 'react-native';
+import { SafeAreaView, Switch, View } from 'react-native';
 import createStyles from './SettingsScreen.style';
 import Text from '../../../../components/Text/Text';
-import Button from '../../../../components/Button/Button';
-import { useAppDispatch } from '../../../../store/hooks';
-import userThunk from '../../../../store/user/userThunk';
 import { useThemeAwareObject } from '../../../../theme/useThemeAwareObject';
+import { useCurrentTheme } from '../../../../hooks/useCurrentTheme';
 
 const SettingsScreen = () => {
   const styles = useThemeAwareObject(createStyles);
-  const dispatch = useAppDispatch();
+  const { changeTheme, currentTheme } = useCurrentTheme();
+  const isDarkTheme = currentTheme.includes('dark');
 
-  const onPressLogOut = async () => {
-    try {
-      await dispatch(userThunk.logOut()).unwrap();
-    } catch (error) {
-      console.log(error);
-    }
+  const onPressToggle = () => {
+    changeTheme();
   };
 
   return (
     <SafeAreaView style={styles.container}>
-      <Text isHeader>Settings</Text>
-      <Button title="log out" onPress={onPressLogOut} />
+      <View style={styles.section}>
+        <Text>Dark theme</Text>
+        <Switch
+          trackColor={{
+            false: styles.trackColorFalse.color,
+            true: styles.trackColorTrue.color,
+          }}
+          thumbColor={
+            isDarkTheme
+              ? styles.thumbColorTrue.color
+              : styles.thumbColorFalse.color
+          }
+          ios_backgroundColor={styles.iosBackgroundColor.color}
+          onValueChange={onPressToggle}
+          value={isDarkTheme}
+        />
+      </View>
     </SafeAreaView>
   );
 };

@@ -6,10 +6,13 @@ const createStyles = (theme: Theme) => {
     container: {
       backgroundColor: theme.colors.background,
       flex: 1,
-      justifyContent: 'center',
+      paddingHorizontal: 20,
     },
     section: {
-      paddingTop: 15,
+      paddingTop: 25,
+      display: 'flex',
+      flexDirection: 'row',
+      justifyContent: 'space-between',
     },
 
     lastSection: {
@@ -17,6 +20,24 @@ const createStyles = (theme: Theme) => {
       flexDirection: 'row',
       alignItems: 'center',
       justifyContent: 'center',
+    },
+
+    trackColorTrue: {
+      color: theme.colors.active,
+    },
+    trackColorFalse: {
+      color: theme.colors.disable,
+    },
+
+    thumbColorTrue: {
+      color: theme.colors.primary,
+    },
+    thumbColorFalse: {
+      color: theme.colors.background,
+    },
+
+    iosBackgroundColor: {
+      color: theme.colors.active,
     },
   });
   return styles;

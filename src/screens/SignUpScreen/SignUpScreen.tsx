@@ -6,7 +6,7 @@ import Text from '../../components/Text/Text';
 import Input from '../../components/Input/Input';
 import { useForm, Controller } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
-import { signupSchema } from '../../types/validationSchemes';
+import { signupSchema } from '../../validation/validationSchemes';
 import { FormSignUpType } from '../../types/userTypes';
 import { checkIsLoginErrorMessage } from '../../utils/errorCheckHelper';
 import { useNavigation } from '@react-navigation/native';
@@ -40,11 +40,11 @@ const SignUpScreen = () => {
 
   const onPressSignUp = async (data: FormSignUpType) => {
     try {
-      await dispatch(userThunk.loginByLoginPass(data)).unwrap();
+      await dispatch(userThunk.signUp(data)).unwrap();
     } catch (error) {
       if (error) {
-        if (checkIsLoginErrorMessage(error as string)) {
-          setError('login', { message: error as string });
+        if (checkIsLoginErrorMessage(error.message as string)) {
+          setError('login', { message: error.message as string });
         }
       }
     }

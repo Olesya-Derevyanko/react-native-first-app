@@ -1,14 +1,13 @@
 import type { FC } from 'react';
 import React from 'react';
-import { View, TouchableOpacity, ButtonProps } from 'react-native';
+import { View, TouchableOpacity, TouchableOpacityProps } from 'react-native';
 import { useThemeAwareObject } from '../../theme/useThemeAwareObject';
 import Text from '../Text/Text';
 
 import createStyles from './Button.style';
 
-interface IProps extends ButtonProps {
+interface IProps extends TouchableOpacityProps {
   title: string;
-  onPress(): void;
 }
 
 const Button: FC<IProps> = ({ title, onPress, ...buttonProps }) => {

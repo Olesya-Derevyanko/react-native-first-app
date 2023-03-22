@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import {
   ImageBackground,
   SafeAreaView,
@@ -12,11 +12,12 @@ import { useAppSelector } from '../../../../store/hooks';
 import { useThemeAwareObject } from '../../../../theme/useThemeAwareObject';
 import UserIcon from '../../../../assets/icons/user.svg';
 import PlusIcon from '../../../../assets/icons/plus.svg';
-import image from '../../../../assets/young-delivery-woman.jpg';
+import ImagePickerModal from '../../../../components/ImagePickerModal/ImagePickerModal';
 
 const UserScreen = () => {
   const user = useAppSelector(state => state.userSlice.user);
   const styles = useThemeAwareObject(createStyles);
+  const [visible, setVisible] = useState(false);
 
   return (
     <SafeAreaView style={styles.container}>
@@ -24,15 +25,17 @@ const UserScreen = () => {
         <View style={styles.avatarArea}>
           {user.avatar ? (
             <ImageBackground
-              source={image}
+              source={{ uri: user.avatar }}
               resizeMode="cover"
               borderRadius={25}
               style={styles.avatarArea}
             />
           ) : (
-            <UserIcon width={150} height={150} style={styles.avatarPhoto} />
+            <UserIcon width={100} height={100} style={styles.avatarPhoto} />
           )}
-          <TouchableOpacity style={styles.changeAvatar}>
+          <TouchableOpacity
+            style={styles.changeAvatar}
+            onPress={() => setVisible(true)}>
             <PlusIcon width={20} height={20} style={styles.changeAvatar} />
           </TouchableOpacity>
         </View>
@@ -57,6 +60,7 @@ const UserScreen = () => {
           </View>
         )}
       </ScrollView>
+      <ImagePickerModal isVisible={visible} onClose={() => setVisible(false)} />
     </SafeAreaView>
   );
 };

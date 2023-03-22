@@ -1,19 +1,20 @@
 import { useAppDispatch, useAppSelector } from '../store/hooks';
 import { setActualTheme } from '../store/user/userSlice';
 import { useTheme } from '../theme/theme.context';
-import { AsyncStorageItem } from './AsyncStorageHelper';
+import { AsyncStorageItem } from '../utils/AsyncStorageHelper';
 
 export const currentThemeStorage = new AsyncStorageItem<string>('theme');
 
 export const useCurrentTheme = () => {
   const dispatch = useAppDispatch();
-  const theme = useAppSelector(state => state.userSlice.theme);
+  const currentTheme = useAppSelector(state => state.userSlice.theme);
+
   const { toggleTheme } = useTheme();
 
   const setCurrentTheme = async () => {
     try {
-      const currentTheme = await currentThemeStorage.get();
-      dispatch(setActualTheme(currentTheme));
+      const theme = await currentThemeStorage.get();
+      dispatch(setActualTheme(theme));
     } catch (error) {
       console.log(error);
     }
@@ -21,7 +22,7 @@ export const useCurrentTheme = () => {
 
   const changeTheme = async () => {
     try {
-      if (theme === 'dark') {
+      if (currentTheme === 'dark') {
         await currentThemeStorage.set('light');
         dispatch(setActualTheme('light'));
       } else {
@@ -37,5 +38,6 @@ export const useCurrentTheme = () => {
   return {
     changeTheme,
     setCurrentTheme,
+    currentTheme,
   };
 };

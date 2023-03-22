@@ -28,6 +28,7 @@ const createStyles = (theme: Theme) => {
     },
 
     tabText: {
+      color: theme.colors.textColor,
       textTransform: 'capitalize',
       fontSize: 15,
       fontWeight: '600',

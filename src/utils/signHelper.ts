@@ -57,3 +57,15 @@ export const checkAuthorizedToAsyncStorage = async () => {
   }
   return authUser;
 };
+
+export const changeAvatarFromAsyncStorage = async (uri: string) => {
+  const authorizedUser: string = await authorizedUserStorage.get();
+  const users: UserType[] = (await usersStorage.get()) || [];
+  const userIndex = users.findIndex(item => item.login === authorizedUser);
+  if (userIndex === -1) {
+    throw new Error('User not found');
+  }
+  users[userIndex].avatar = uri;
+  usersStorage.set(users);
+  return users[userIndex];
+};

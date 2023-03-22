@@ -1,6 +1,7 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import { FormSignInType, FormSignUpType } from '../../types/userTypes';
 import {
+  changeAvatarFromAsyncStorage,
   checkAuthorizedToAsyncStorage,
   logoutFromAsyncStorage,
   signInToAsyncStorage,
@@ -55,9 +56,22 @@ const signUp = createAsyncThunk(
   },
 );
 
+const changeAvatar = createAsyncThunk(
+  'user/change-avatar',
+  async (uri: string, { rejectWithValue }) => {
+    try {
+      const res = await changeAvatarFromAsyncStorage(uri);
+      return res;
+    } catch (err) {
+      return rejectWithValue(err);
+    }
+  },
+);
+
 export default {
   loginByLoginPass,
   loginByLogin,
   signUp,
   logOut,
+  changeAvatar,
 };

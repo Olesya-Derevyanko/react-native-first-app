@@ -1,10 +1,7 @@
 import React from 'react';
 import { SafeAreaView } from 'react-native';
 import createStyles from './ProfileScreen.style';
-// import Text from '../../components/Text/Text';
-// import Button from '../../components/Button/Button';
 import { useThemeAwareObject } from '../../theme/useThemeAwareObject';
-// import { useCurrentTheme } from '../../utils/useCurrentTheme';
 import { TabView, SceneMap, TabBar } from 'react-native-tab-view';
 import UserScreen from './Screens/UserScreen/UserScreen';
 import SettingsScreen from './Screens/SettingsScreen/SettingsScreen';
@@ -15,12 +12,7 @@ const renderScene = SceneMap({
 });
 
 const ProfileScreen = () => {
-  // const { changeTheme } = useCurrentTheme();
   const styles = useThemeAwareObject(createStyles);
-
-  // const onPressChangeTheme = async () => {
-  //   changeTheme();
-  // };
 
   const [index, setIndex] = React.useState(0);
   const [routes] = React.useState([
@@ -44,8 +36,6 @@ const ProfileScreen = () => {
           />
         )}
       />
-      {/* <Text isHeader>Profile</Text>
-      <Button title="Change theme" onPress={onPressChangeTheme} /> */}
     </SafeAreaView>
   );
 };
