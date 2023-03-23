@@ -36,9 +36,9 @@ const SignUpScreen = () => {
     try {
       await signUp(data);
     } catch (error) {
-      if (error) {
-        if (checkIsLoginErrorMessage(error.message as string)) {
-          setError('login', { message: error.message as string });
+      if (error instanceof Error) {
+        if (checkIsLoginErrorMessage(error.message)) {
+          setError('login', { message: error.message });
         }
       }
     }

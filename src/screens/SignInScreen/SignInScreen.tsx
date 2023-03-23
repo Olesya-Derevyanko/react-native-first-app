@@ -8,15 +8,12 @@ import { FormSignInType } from '../../types/userTypes';
 import { useForm, Controller } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { loginSchema } from '../../validation/validationSchemes';
-import {
-  checkIsLoginErrorMessage,
-  checkIsPasswordErrorMessage,
-} from '../../utils/errorCheckHelper';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { NavigatorRootStackParamListType } from '../../types/navigationTypes';
 import { useNavigation } from '@react-navigation/native';
 import { useThemeAwareObject } from '../../theme/useThemeAwareObject';
 import { useCurrentUser } from '../../hooks/useCurrentUser';
+import setNotifier from '../../components/Notifier/Notifier';
 
 const SignInScreen = () => {
   const styles = useThemeAwareObject(createStyles);
@@ -25,7 +22,7 @@ const SignInScreen = () => {
     useNavigation<
       NativeStackNavigationProp<NavigatorRootStackParamListType, 'SignIn'>
     >();
-  const { control, handleSubmit, setError } = useForm<FormSignInType>({
+  const { control, handleSubmit } = useForm<FormSignInType>({
     mode: 'all',
     resolver: yupResolver(loginSchema),
     defaultValues: {
@@ -38,13 +35,18 @@ const SignInScreen = () => {
     try {
       await signIn(data);
     } catch (error) {
-      if (error) {
-        if (checkIsLoginErrorMessage(error.message as string)) {
-          setError('login', { message: error.message as string });
-        }
-        if (checkIsPasswordErrorMessage(error.message as string)) {
-          setError('password', { message: error.message as string });
-        }
+      if (error instanceof Error) {
+        setNotifier({
+          title: error.message,
+          description: '',
+          alertType: 'error',
+        });
+        // if (checkIsLoginErrorMessage(error.message)) {
+        //   setError('login', { message: error.message });
+        // }
+        // if (checkIsPasswordErrorMessage(error.message)) {
+        //   setError('password', { message: error.message });
+        // }
       }
     }
   };

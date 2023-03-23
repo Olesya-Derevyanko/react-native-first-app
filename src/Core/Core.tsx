@@ -6,6 +6,7 @@ import { DEFAULT_DARK_THEME } from '../theme/darkTheme';
 import { DEFAULT_LIGHT_THEME } from '../theme/lightTheme';
 import { ThemeProvider } from '../theme/theme.context';
 import Spinner from '../components/Spinner/Spinner';
+import { NotifierWrapper } from 'react-native-notifier';
 
 const Core = () => {
   const [isLoading, setIsLoading] = useState(true);
@@ -34,7 +35,9 @@ const Core = () => {
         translucent
         barStyle={currentTheme === 'dark' ? 'light-content' : 'dark-content'}
       />
-      <Navigation />
+      <NotifierWrapper>
+        <Navigation />
+      </NotifierWrapper>
     </ThemeProvider>
   );
 };
