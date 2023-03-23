@@ -1,5 +1,6 @@
 import { useAppDispatch, useAppSelector } from '../store/hooks';
-import { FormSignUpType, UserType } from '../types/userTypes';
+import { logoutUser, setActualUser } from '../store/user/userSlice';
+import { FormSignInType, FormSignUpType, UserType } from '../types/userTypes';
 import { AsyncStorageItem } from '../utils/AsyncStorageHelper';
 
 export const usersStorage = new AsyncStorageItem<UserType[]>('users');
@@ -25,7 +26,7 @@ export const useCurrentUser = () => {
     users.push(newUser);
     usersStorage.set(users);
     authorizedUserStorage.set(login);
-    return newUser;
+    dispatch(setActualUser(newUser));
   };
 
   const signIn = async (value: FormSignInType) => {
@@ -38,16 +39,17 @@ export const useCurrentUser = () => {
     if (users[userIndex].password !== password) {
       throw new Error('Invalid password');
     }
-    authorizedUserStorage.set(login);
-    return users[userIndex];
+    await authorizedUserStorage.set(login);
+    dispatch(setActualUser(users[userIndex]));
+  };
+
+  const logout = async () => {
+    dispatch(logoutUser());
+    await authorizedUserStorage.remove();
   };
 
   const checkAuthUser = async () => {
     return await authorizedUserStorage.get();
-  };
-
-  const logoutFromAsyncStorage = async () => {
-    await authorizedUserStorage.remove();
   };
 
   const checkAuthorized = async () => {
@@ -60,10 +62,10 @@ export const useCurrentUser = () => {
     if (!authUser?.login.length) {
       throw new Error('User not found');
     }
-    return authUser;
+    dispatch(setActualUser(authUser));
   };
 
-  const changeAvatarFromAsyncStorage = async (uri: string) => {
+  const changeAvatar = async (uri: string) => {
     const authorizedUser: string = await authorizedUserStorage.get();
     const users: UserType[] = (await usersStorage.get()) || [];
     const userIndex = users.findIndex(item => item.login === authorizedUser);
@@ -72,11 +74,16 @@ export const useCurrentUser = () => {
     }
     users[userIndex].avatar = uri;
     usersStorage.set(users);
-    return users[userIndex];
+    dispatch(setActualUser(users[userIndex]));
   };
 
   return {
-
-  }
-
+    signIn,
+    signUp,
+    logout,
+    checkAuthUser,
+    checkAuthorized,
+    changeAvatar,
+    currentUser,
+  };
 };

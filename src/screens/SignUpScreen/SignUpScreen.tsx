@@ -12,13 +12,12 @@ import { checkIsLoginErrorMessage } from '../../utils/errorCheckHelper';
 import { useNavigation } from '@react-navigation/native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { NavigatorRootStackParamListType } from '../../types/navigationTypes';
-import { useAppDispatch } from '../../store/hooks';
-import userThunk from '../../store/user/userThunk';
 import { useThemeAwareObject } from '../../theme/useThemeAwareObject';
+import { useCurrentUser } from '../../hooks/useCurrentUser';
 
 const SignUpScreen = () => {
   const styles = useThemeAwareObject(createStyles);
-  const dispatch = useAppDispatch();
+  const { signUp } = useCurrentUser();
   const navigate =
     useNavigation<
       NativeStackNavigationProp<NavigatorRootStackParamListType, 'SignUp'>
@@ -40,7 +39,7 @@ const SignUpScreen = () => {
 
   const onPressSignUp = async (data: FormSignUpType) => {
     try {
-      await dispatch(userThunk.signUp(data)).unwrap();
+      await signUp(data);
     } catch (error) {
       if (error) {
         if (checkIsLoginErrorMessage(error.message as string)) {

@@ -1,6 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
 import type { UserSliceType } from '../../types/userTypes';
-import userThunk from './userThunk';
 
 const initialState: UserSliceType = {
   user: {
@@ -17,42 +16,14 @@ export const userSlice = createSlice({
     setActualTheme: (state, { payload }) => {
       state.theme = payload;
     },
-  },
-  extraReducers: builder => {
-    builder.addCase(
-      userThunk.loginByLoginPass.fulfilled,
-      (state, { payload }) => {
-        if (!payload) {
-          return;
-        }
-        state.user = payload;
-      },
-    );
-    builder.addCase(userThunk.loginByLogin.fulfilled, (state, { payload }) => {
-      if (!payload) {
-        return;
-      }
+    setActualUser: (state, { payload }) => {
       state.user = payload;
-    });
-    builder.addCase(userThunk.signUp.fulfilled, (state, { payload }) => {
-      if (!payload) {
-        return;
-      }
-      state.user = payload;
-    });
-
-    builder.addCase(userThunk.changeAvatar.fulfilled, (state, { payload }) => {
-      if (!payload) {
-        return;
-      }
-      state.user = payload;
-    });
-
-    builder.addCase(userThunk.logOut.fulfilled, () => {
-      return initialState;
-    });
+    },
+    logoutUser: state => {
+      state.user = initialState.user;
+    },
   },
 });
 
-export const { setActualTheme } = userSlice.actions;
+export const { setActualTheme, setActualUser, logoutUser } = userSlice.actions;
 export default userSlice.reducer;

@@ -3,17 +3,16 @@ import { SafeAreaView } from 'react-native';
 import createStyles from './HomeScreen.style';
 import Text from '../../components/Text/Text';
 import Button from '../../components/Button/Button';
-import { useAppDispatch } from '../../store/hooks';
-import userThunk from '../../store/user/userThunk';
 import { useThemeAwareObject } from '../../theme/useThemeAwareObject';
+import { useCurrentUser } from '../../hooks/useCurrentUser';
 
 const HomeScreen = () => {
   const styles = useThemeAwareObject(createStyles);
-  const dispatch = useAppDispatch();
+  const { logout } = useCurrentUser();
 
   const onPressLogOut = async () => {
     try {
-      await dispatch(userThunk.logOut()).unwrap();
+      await logout();
     } catch (error) {
       console.log(error);
     }

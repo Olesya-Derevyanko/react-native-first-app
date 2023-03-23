@@ -3,30 +3,27 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { NavigatorRootStackParamListType } from '../types/navigationTypes';
 import AuthStack from './AuthStack';
-import { checkAuthUser } from '../utils/signHelper';
 import RootStack from './RootStack';
-import { useAppDispatch, useAppSelector } from '../store/hooks';
-import userThunk from '../store/user/userThunk';
 import Spinner from '../components/Spinner/Spinner';
+import { useCurrentUser } from '../hooks/useCurrentUser';
 
 const Stack = createNativeStackNavigator<NavigatorRootStackParamListType>();
 
 const Navigation = () => {
   const [isLoading, setIsLoading] = useState(true);
-  const dispatch = useAppDispatch();
-  const user = useAppSelector(state => state.userSlice.user);
+  const { checkAuthUser, checkAuthorized, currentUser } = useCurrentUser();
 
   useEffect(() => {
     (async () => {
       const login = await checkAuthUser();
       if (login) {
-        await dispatch(userThunk.loginByLogin()).unwrap();
+        await checkAuthorized();
       }
       if (isLoading) {
         setIsLoading(false);
       }
     })();
-  }, [dispatch, isLoading]);
+  }, [checkAuthUser, checkAuthorized, isLoading]);
 
   if (isLoading) {
     return <Spinner />;
@@ -38,7 +35,7 @@ const Navigation = () => {
         screenOptions={{
           headerShown: false,
         }}>
-        {user.login ? (
+        {currentUser.login ? (
           <Stack.Screen name="Root" component={RootStack} />
         ) : (
           <Stack.Screen name="AuthStack" component={AuthStack} />

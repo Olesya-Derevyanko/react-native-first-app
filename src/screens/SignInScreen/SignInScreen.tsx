@@ -15,13 +15,12 @@ import {
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { NavigatorRootStackParamListType } from '../../types/navigationTypes';
 import { useNavigation } from '@react-navigation/native';
-import { useAppDispatch } from '../../store/hooks';
-import userThunk from '../../store/user/userThunk';
 import { useThemeAwareObject } from '../../theme/useThemeAwareObject';
+import { useCurrentUser } from '../../hooks/useCurrentUser';
 
 const SignInScreen = () => {
   const styles = useThemeAwareObject(createStyles);
-  const dispatch = useAppDispatch();
+  const { signIn } = useCurrentUser();
   const navigate =
     useNavigation<
       NativeStackNavigationProp<NavigatorRootStackParamListType, 'SignIn'>
@@ -42,7 +41,7 @@ const SignInScreen = () => {
 
   const onPressSignIn = async (data: FormSignInType) => {
     try {
-      await dispatch(userThunk.loginByLoginPass(data)).unwrap();
+      await signIn(data);
     } catch (error) {
       if (error) {
         if (checkIsLoginErrorMessage(error.message as string)) {

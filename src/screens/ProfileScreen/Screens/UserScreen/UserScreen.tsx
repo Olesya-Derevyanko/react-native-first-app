@@ -8,14 +8,14 @@ import {
 } from 'react-native';
 import createStyles from './UserScreen.style';
 import Text from '../../../../components/Text/Text';
-import { useAppSelector } from '../../../../store/hooks';
 import { useThemeAwareObject } from '../../../../theme/useThemeAwareObject';
 import UserIcon from '../../../../assets/icons/user.svg';
 import PlusIcon from '../../../../assets/icons/plus.svg';
 import ImagePickerModal from '../../../../components/ImagePickerModal/ImagePickerModal';
+import { useCurrentUser } from '../../../../hooks/useCurrentUser';
 
 const UserScreen = () => {
-  const user = useAppSelector(state => state.userSlice.user);
+  const { currentUser } = useCurrentUser();
   const styles = useThemeAwareObject(createStyles);
   const [visible, setVisible] = useState(false);
 
@@ -23,9 +23,9 @@ const UserScreen = () => {
     <SafeAreaView style={styles.container}>
       <ScrollView contentContainerStyle={styles.infoArea}>
         <View style={styles.avatarArea}>
-          {user.avatar ? (
+          {currentUser.avatar ? (
             <ImageBackground
-              source={{ uri: user.avatar }}
+              source={{ uri: currentUser.avatar }}
               resizeMode="cover"
               borderRadius={25}
               style={styles.avatarArea}
@@ -39,24 +39,24 @@ const UserScreen = () => {
             <PlusIcon width={20} height={20} style={styles.changeAvatar} />
           </TouchableOpacity>
         </View>
-        {user.name && (
+        {currentUser.name && (
           <View>
             <Text>Name: </Text>
-            <Text>{user.name}</Text>
+            <Text>{currentUser.name}</Text>
           </View>
         )}
 
-        {user.email && (
+        {currentUser.email && (
           <View>
             <Text>Email: </Text>
-            <Text>{user.email}</Text>
+            <Text>{currentUser.email}</Text>
           </View>
         )}
 
-        {user.dob && (
+        {currentUser.dob && (
           <View>
             <Text>Date of birth: </Text>
-            <Text>{user.dob?.toDateString()}</Text>
+            <Text>{currentUser.dob?.toDateString()}</Text>
           </View>
         )}
       </ScrollView>

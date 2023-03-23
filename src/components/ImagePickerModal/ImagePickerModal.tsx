@@ -12,9 +12,8 @@ import { useThemeAwareObject } from '../../theme/useThemeAwareObject';
 import Button from '../Button/Button';
 
 import createStyles from './ImagePickerModal.style';
-import { useAppDispatch } from '../../store/hooks';
-import userThunk from '../../store/user/userThunk';
 import CameraIcon from '../../assets/icons/camera.svg';
+import { useCurrentUser } from '../../hooks/useCurrentUser';
 
 interface IProps {
   isVisible: boolean;
@@ -33,7 +32,7 @@ type ImageType = {
 
 const ImagePickerModal: FC<IProps> = ({ isVisible, onClose }) => {
   const styles = useThemeAwareObject(createStyles);
-  const dispatch = useAppDispatch();
+  const { changeAvatar } = useCurrentUser();
   const [pickerResponse, setPickerResponse] = useState<{ assets: ImageType[] }>(
     { assets: [] },
   );
@@ -60,10 +59,10 @@ const ImagePickerModal: FC<IProps> = ({ isVisible, onClose }) => {
     launchCamera(options, changePicker);
   }, [changePicker]);
 
-  const onPressSaveImage = () => {
+  const onPressSaveImage = async () => {
     try {
       if (uri.length) {
-        dispatch(userThunk.changeAvatar(uri)).unwrap();
+        await changeAvatar(uri);
       }
     } catch (error) {
       console.error(error);
