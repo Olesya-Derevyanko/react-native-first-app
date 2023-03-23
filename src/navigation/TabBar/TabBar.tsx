@@ -12,6 +12,7 @@ import { useThemeAwareObject } from '../../theme/useThemeAwareObject';
 import createStyles from './TabBar.style';
 import HomeIcon from '../../assets/icons/home.svg';
 import ProfileIcon from '../../assets/icons/user.svg';
+import ListIcon from '../../assets/icons/apps.svg';
 
 type PropsType = {
   state: TabNavigationState<ParamListBase>;
@@ -30,6 +31,8 @@ const TabBar: React.FC<PropsType> = ({ state, descriptors, navigation }) => {
     height: number;
   }) => {
     switch (option.name) {
+      case 'List':
+        return <ListIcon {...option} />;
       case 'Home':
         return <HomeIcon {...option} />;
       case 'Profile':

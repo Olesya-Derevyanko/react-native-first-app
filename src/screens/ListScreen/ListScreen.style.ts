@@ -7,6 +7,7 @@ const createStyles = (theme: Theme) => {
       backgroundColor: theme.colors.background,
       flex: 1,
       justifyContent: 'center',
+      width: '100%',
     },
     section: {
       paddingTop: 15,

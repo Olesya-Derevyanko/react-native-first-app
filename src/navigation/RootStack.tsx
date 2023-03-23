@@ -4,6 +4,7 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import HomeScreen from '../screens/HomeScreen/HomeScreen';
 import ProfileScreen from '../screens/ProfileScreen/ProfileScreen';
 import TabBar from './TabBar/TabBar';
+import ListScreen from '../screens/ListScreen/ListScreen';
 
 const TabStack = createBottomTabNavigator<NavigatorRootStackParamListType>();
 
@@ -21,6 +22,7 @@ const RootStack = () => {
           descriptors={props.descriptors}
         />
       )}>
+      <TabStack.Screen name="List" component={ListScreen} />
       <TabStack.Screen name="Home" component={HomeScreen} />
       <TabStack.Screen name="Profile" component={ProfileScreen} />
     </TabStack.Navigator>

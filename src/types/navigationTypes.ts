@@ -6,6 +6,7 @@ export type NavigatorRootStackParamListType = {
   SignUp: undefined;
   AuthStack: undefined;
   Home: undefined;
+  List: undefined;
   Profile: undefined;
   Root: undefined;
 };
