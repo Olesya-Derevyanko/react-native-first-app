@@ -25,12 +25,7 @@ const SignInScreen = () => {
     useNavigation<
       NativeStackNavigationProp<NavigatorRootStackParamListType, 'SignIn'>
     >();
-  const {
-    control,
-    handleSubmit,
-    setError,
-    formState: { errors },
-  } = useForm<FormSignInType>({
+  const { control, handleSubmit, setError } = useForm<FormSignInType>({
     mode: 'all',
     resolver: yupResolver(loginSchema),
     defaultValues: {
@@ -64,12 +59,15 @@ const SignInScreen = () => {
       <View style={styles.section}>
         <Controller
           control={control}
-          render={({ field: { onChange, onBlur, value } }) => (
+          render={({
+            field: { onChange, onBlur, value },
+            fieldState: { error },
+          }) => (
             <Input
               textValue={value}
               onChangeText={onChange}
               placeHolder="Login"
-              error={errors.login?.message}
+              error={error?.message}
               onBlur={onBlur}
             />
           )}
@@ -79,12 +77,15 @@ const SignInScreen = () => {
       <View style={styles.section}>
         <Controller
           control={control}
-          render={({ field: { onChange, onBlur, value } }) => (
+          render={({
+            field: { onChange, onBlur, value },
+            fieldState: { error },
+          }) => (
             <Input
               textValue={value}
               onChangeText={onChange}
               placeHolder="Password"
-              error={errors.password?.message}
+              error={error?.message}
               onBlur={onBlur}
               isPassword
             />

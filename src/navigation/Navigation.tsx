@@ -11,19 +11,17 @@ const Stack = createNativeStackNavigator<NavigatorRootStackParamListType>();
 
 const Navigation = () => {
   const [isLoading, setIsLoading] = useState(true);
-  const { checkAuthUser, checkAuthorized, currentUser } = useCurrentUser();
+  const { checkAuthorized, currentUser } = useCurrentUser();
 
   useEffect(() => {
     (async () => {
-      const login = await checkAuthUser();
-      if (login) {
-        await checkAuthorized();
-      }
+      await checkAuthorized();
       if (isLoading) {
         setIsLoading(false);
       }
     })();
-  }, [checkAuthUser, checkAuthorized, isLoading]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [isLoading]);
 
   if (isLoading) {
     return <Spinner />;

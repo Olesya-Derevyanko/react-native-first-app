@@ -44,18 +44,14 @@ export const useCurrentUser = () => {
   };
 
   const logout = async () => {
-    dispatch(logoutUser());
     await authorizedUserStorage.remove();
-  };
-
-  const checkAuthUser = async () => {
-    return await authorizedUserStorage.get();
+    dispatch(logoutUser());
   };
 
   const checkAuthorized = async () => {
     const authorizedUser: string = await authorizedUserStorage.get();
     if (authorizedUser === null) {
-      throw new Error('Invalid password');
+      return;
     }
     const users: UserType[] = (await usersStorage.get()) || [];
     const authUser = users.find(item => item.login === authorizedUser);
@@ -81,7 +77,6 @@ export const useCurrentUser = () => {
     signIn,
     signUp,
     logout,
-    checkAuthUser,
     checkAuthorized,
     changeAvatar,
     currentUser,
