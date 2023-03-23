@@ -41,12 +41,6 @@ const SignInScreen = () => {
           description: '',
           alertType: 'error',
         });
-        // if (checkIsLoginErrorMessage(error.message)) {
-        //   setError('login', { message: error.message });
-        // }
-        // if (checkIsPasswordErrorMessage(error.message)) {
-        //   setError('password', { message: error.message });
-        // }
       }
     }
   };

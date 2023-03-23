@@ -8,7 +8,7 @@ import { useCurrentTheme } from '../../../../hooks/useCurrentTheme';
 const SettingsScreen = () => {
   const styles = useThemeAwareObject(createStyles);
   const { changeTheme, currentTheme } = useCurrentTheme();
-  const isDarkTheme = currentTheme.includes('dark');
+  const isDarkTheme = (currentTheme || '').includes('dark');
 
   const onPressToggle = () => {
     changeTheme();

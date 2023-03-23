@@ -5,6 +5,8 @@ import {
   TextInput,
   KeyboardTypeOptions,
   TextInputProps,
+  NativeSyntheticEvent,
+  TextInputFocusEventData,
 } from 'react-native';
 
 import createStyles from './Input.style';
@@ -35,9 +37,10 @@ const Input: FC<IProps> = props => {
   const [activeStyle, setActiveStyle] = useState({});
   const [isFocus, setIsFocus] = useState(false);
 
-  const onSetStyles = () => {
+  const onSetStyles = (e: NativeSyntheticEvent<TextInputFocusEventData>) => {
     setIsFocus(true);
     setActiveStyle(styles.inputActive);
+    inputProps?.onFocus?.(e);
   };
   const onUnsetStyles = () => {
     if (error) {
@@ -49,6 +52,7 @@ const Input: FC<IProps> = props => {
       props.onBlur();
     }
     setIsFocus(false);
+    inputProps?.onBlur?.();
   };
 
   useEffect(() => {

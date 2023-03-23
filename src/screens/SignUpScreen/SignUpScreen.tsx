@@ -8,12 +8,12 @@ import { useForm, Controller } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { signupSchema } from '../../validation/validationSchemes';
 import { FormSignUpType } from '../../types/userTypes';
-import { checkIsLoginErrorMessage } from '../../utils/errorCheckHelper';
 import { useNavigation } from '@react-navigation/native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { NavigatorRootStackParamListType } from '../../types/navigationTypes';
 import { useThemeAwareObject } from '../../theme/useThemeAwareObject';
 import { useCurrentUser } from '../../hooks/useCurrentUser';
+import setNotifier from '../../components/Notifier/Notifier';
 
 const SignUpScreen = () => {
   const styles = useThemeAwareObject(createStyles);
@@ -22,7 +22,7 @@ const SignUpScreen = () => {
     useNavigation<
       NativeStackNavigationProp<NavigatorRootStackParamListType, 'SignUp'>
     >();
-  const { control, handleSubmit, setError } = useForm<FormSignUpType>({
+  const { control, handleSubmit } = useForm<FormSignUpType>({
     mode: 'all',
     resolver: yupResolver(signupSchema),
     defaultValues: {
@@ -37,9 +37,11 @@ const SignUpScreen = () => {
       await signUp(data);
     } catch (error) {
       if (error instanceof Error) {
-        if (checkIsLoginErrorMessage(error.message)) {
-          setError('login', { message: error.message });
-        }
+        setNotifier({
+          title: error.message,
+          description: '',
+          alertType: 'error',
+        });
       }
     }
   };
