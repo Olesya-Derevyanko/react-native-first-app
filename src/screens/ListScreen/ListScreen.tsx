@@ -3,84 +3,26 @@ import { FlatList, SafeAreaView } from 'react-native';
 import createStyles from './ListScreen.style';
 import Text from '../../components/Text/Text';
 import { useThemeAwareObject } from '../../theme/useThemeAwareObject';
-import { CharacterType } from '../../types/ApiTypes';
 import ListItem from '../../components/ListItem/ListItem';
-
-const arrItems: Array<CharacterType> = [
-  {
-    id: 1,
-    name: 'Rick',
-    status: 'Alive',
-    species: 'some',
-    type: 'human',
-    gender: 'male',
-    origin: {
-      name: 'earth',
-      url: '',
-    },
-    location: {
-      name: 'earth',
-      url: '',
-    },
-    image: '',
-    episode: ['qwe', 'qwe2'],
-    url: '',
-    created: '',
-    firstEpisode: 'qwe',
-  },
-  {
-    id: 2,
-    name: 'Morty',
-    status: 'Alive',
-    species: 'some',
-    type: 'human',
-    gender: 'male',
-    origin: {
-      name: 'earth',
-      url: '',
-    },
-    location: {
-      name: 'earth',
-      url: '',
-    },
-    image: '',
-    episode: ['qwe', 'qwe2'],
-    url: '',
-    created: '',
-    firstEpisode: 'qwe',
-  },
-  {
-    id: 3,
-    name: 'Alex',
-    status: 'Alive',
-    species: 'some',
-    type: 'human',
-    gender: 'male',
-    origin: {
-      name: 'earth',
-      url: '',
-    },
-    location: {
-      name: 'earth',
-      url: '',
-    },
-    image: '',
-    episode: ['qwe', 'qwe2'],
-    url: '',
-    created: '',
-    firstEpisode: 'qwe',
-  },
-];
+import Spinner from '../../components/Spinner/Spinner';
+import { useCurrentApi } from '../../hooks/useCurrentApi';
 
 const ListScreen = () => {
   const styles = useThemeAwareObject(createStyles);
+  const { currentCharacters, getCharacters } = useCurrentApi();
+
+  const downloadCurrentItems = async () => {
+    await getCharacters();
+  };
 
   return (
     <SafeAreaView style={styles.container}>
-      <Text isHeader>List</Text>
+      <Text isHeader>Rick and Morty</Text>
       <FlatList
-        data={arrItems}
+        data={currentCharacters}
         renderItem={item => <ListItem person={item.item} />}
+        ListFooterComponent={<Spinner />}
+        onEndReached={downloadCurrentItems}
       />
     </SafeAreaView>
   );

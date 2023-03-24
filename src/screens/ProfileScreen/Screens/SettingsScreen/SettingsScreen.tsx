@@ -4,14 +4,25 @@ import createStyles from './SettingsScreen.style';
 import Text from '../../../../components/Text/Text';
 import { useThemeAwareObject } from '../../../../theme/useThemeAwareObject';
 import { useCurrentTheme } from '../../../../hooks/useCurrentTheme';
+import Button from '../../../../components/Button/Button';
+import { useCurrentUser } from '../../../../hooks/useCurrentUser';
 
 const SettingsScreen = () => {
   const styles = useThemeAwareObject(createStyles);
   const { changeTheme, currentTheme } = useCurrentTheme();
+  const { logout } = useCurrentUser();
   const isDarkTheme = (currentTheme || '').includes('dark');
 
   const onPressToggle = () => {
     changeTheme();
+  };
+
+  const onPressLogOut = async () => {
+    try {
+      await logout();
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   return (
@@ -32,6 +43,9 @@ const SettingsScreen = () => {
           onValueChange={onPressToggle}
           value={isDarkTheme}
         />
+      </View>
+      <View>
+        <Button title="log out" onPress={onPressLogOut} />
       </View>
     </SafeAreaView>
   );

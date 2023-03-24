@@ -3,10 +3,20 @@ import { Theme } from '../../theme/theme.interface';
 
 const createStyles = (theme: Theme) => {
   const styles = StyleSheet.create({
+    loadingContainer: {
+      backgroundColor: theme.colors.background,
+      flex: 1,
+      justifyContent: 'center',
+    },
     container: {
+      backgroundColor: theme.colors.background,
+      flex: 1,
       alignSelf: 'stretch',
-      borderRadius: 25,
-      backgroundColor: theme.colors.backgroundInput,
+    },
+
+    mainContainer: {
+      flex: 1,
+      alignItems: 'center',
     },
 
     marginContent: {
@@ -15,9 +25,8 @@ const createStyles = (theme: Theme) => {
 
     imageSection: {
       flex: 1,
-      borderTopLeftRadius: 25,
-      borderTopRightRadius: 25,
-      width: '100%',
+      borderRadius: 25,
+      width: 300,
       height: 300,
     },
 

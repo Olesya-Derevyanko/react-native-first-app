@@ -1,17 +1,12 @@
 import { StyleSheet } from 'react-native';
-import { Theme } from '../../theme/theme.interface';
+import { Theme } from '../theme/theme.interface';
 
 const createStyles = (theme: Theme) => {
   const styles = StyleSheet.create({
-    container: {
-      alignSelf: 'center',
+    loadingContainer: {
+      backgroundColor: theme.colors.background,
       flex: 1,
       justifyContent: 'center',
-      padding: 10,
-    },
-
-    spinner: {
-      color: theme.colors.primary,
     },
   });
   return styles;

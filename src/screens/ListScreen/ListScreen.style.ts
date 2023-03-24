@@ -19,6 +19,10 @@ const createStyles = (theme: Theme) => {
       alignItems: 'center',
       justifyContent: 'center',
     },
+
+    spinnerContainer: {
+      alignSelf: 'center',
+    },
   });
   return styles;
 };

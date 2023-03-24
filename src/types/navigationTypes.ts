@@ -1,7 +1,4 @@
 export type NavigatorRootStackParamListType = {
-  All: { name: string };
-  Completed: { name: string };
-  Active: { name: string };
   SignIn: undefined;
   SignUp: undefined;
   AuthStack: undefined;
@@ -9,4 +6,5 @@ export type NavigatorRootStackParamListType = {
   List: undefined;
   Profile: undefined;
   Root: undefined;
+  SingleCharacter: { id: number };
 };

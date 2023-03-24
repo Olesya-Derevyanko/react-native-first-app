@@ -12,6 +12,19 @@ const createStyles = (theme: Theme) => {
       paddingTop: 15,
     },
 
+    sectionContainer: {
+      display: 'flex',
+      flexDirection: 'row',
+      justifyContent: 'center',
+      padding: 15,
+    },
+
+    subTitle: {
+      fontSize: 16,
+      fontWeight: '800',
+      textTransform: 'uppercase',
+    },
+
     lastSection: {
       display: 'flex',
       flexDirection: 'row',

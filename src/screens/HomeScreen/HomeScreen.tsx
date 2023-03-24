@@ -1,27 +1,32 @@
 import React from 'react';
-import { SafeAreaView } from 'react-native';
+import { SafeAreaView, View } from 'react-native';
 import createStyles from './HomeScreen.style';
 import Text from '../../components/Text/Text';
-import Button from '../../components/Button/Button';
 import { useThemeAwareObject } from '../../theme/useThemeAwareObject';
-import { useCurrentUser } from '../../hooks/useCurrentUser';
+import { useCurrentApi } from '../../hooks/useCurrentApi';
 
 const HomeScreen = () => {
   const styles = useThemeAwareObject(createStyles);
-  const { logout } = useCurrentUser();
-
-  const onPressLogOut = async () => {
-    try {
-      await logout();
-    } catch (error) {
-      console.log(error);
-    }
-  };
+  const { currentInfoCharacter, currentInfoEpisode, currentInfoLocation } =
+    useCurrentApi();
 
   return (
     <SafeAreaView style={styles.container}>
       <Text isHeader>Home</Text>
-      <Button title="log out" onPress={onPressLogOut} />
+      <View style={styles.container}>
+        <View style={styles.sectionContainer}>
+          <Text style={styles.subTitle}>Characters: </Text>
+          <Text style={styles.subTitle}>{currentInfoCharacter.count}</Text>
+        </View>
+        <View style={styles.sectionContainer}>
+          <Text style={styles.subTitle}>Locations: </Text>
+          <Text style={styles.subTitle}>{currentInfoLocation.count}</Text>
+        </View>
+        <View style={styles.sectionContainer}>
+          <Text style={styles.subTitle}>Episodes: </Text>
+          <Text style={styles.subTitle}>{currentInfoEpisode.count}</Text>
+        </View>
+      </View>
     </SafeAreaView>
   );
 };
