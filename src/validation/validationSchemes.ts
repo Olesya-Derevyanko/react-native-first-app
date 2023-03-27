@@ -17,6 +17,11 @@ const formErrorTexts = {
     oneOf: 'Both password need to be the same',
     required: 'Repeat your password without errors',
   },
+  oldPassword: {
+    min: 'The password is too short',
+    matches: 'The password must consist of numbers and latin characters',
+    required: 'Enter your old password',
+  },
 };
 
 export const loginSchema = yup.object().shape({
@@ -45,9 +50,29 @@ export const signupSchema = yup.object().shape({
   login: yup.string().required(formErrorTexts.login.required),
 });
 
+export const resetPassSchema = yup.object().shape({
+  oldPassword: yup
+    .string()
+    .required(formErrorTexts.oldPassword.required)
+    .matches(/[a-zA-Z]/, formErrorTexts.oldPassword.matches)
+    .matches(/[0-9]/, formErrorTexts.oldPassword.matches)
+    .matches(/^[a-zA-Z0-9-_]{8,}$/, formErrorTexts.oldPassword.matches)
+    .min(8, formErrorTexts.oldPassword.min),
+  password: yup
+    .string()
+    .required(formErrorTexts.password.required)
+    .matches(/[a-zA-Z]/, formErrorTexts.password.matches)
+    .matches(/[0-9]/, formErrorTexts.password.matches)
+    .matches(/^[a-zA-Z0-9-_]{8,}$/, formErrorTexts.password.matches)
+    .min(8, formErrorTexts.password.min),
+  repeatPassword: yup
+    .string()
+    .oneOf([yup.ref('password')], formErrorTexts.repeatPassword.oneOf)
+    .required(formErrorTexts.repeatPassword.required),
+});
+
 export const userSchema = yup.object().shape({
   name: yup.string(),
-  lastName: yup.string(),
   email: yup.string().email(formErrorTexts.email.email),
   dob: yup.date().max(new Date()),
 });

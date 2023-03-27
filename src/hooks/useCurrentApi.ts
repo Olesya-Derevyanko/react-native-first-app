@@ -49,13 +49,15 @@ export const useCurrentApi = () => {
 
   const getCurrentCharacter = async (id: number) => {
     const res = await characterAPI.getCharacterById(id);
-    const episodes = res.data.episode.map(async item => {
+    const episode = res.data.episode;
+    let episodes = [];
+    episodes = episode.map(async item => {
       const data = await episodeAPI.getEpisodeById(+item.split('episode/')[1]);
       return data.data;
     });
     const episodeRes = await Promise.all(episodes);
-    dispatch(setActualCharacter(res.data));
     dispatch(setEpisodes(episodeRes));
+    dispatch(setActualCharacter(res.data));
   };
 
   const getEpisodes = async () => {

@@ -6,7 +6,7 @@ import ProfileScreen from '../screens/ProfileScreen/ProfileScreen';
 import TabBar from './TabBar/TabBar';
 import { useCurrentApi } from '../hooks/useCurrentApi';
 import Spinner from '../components/Spinner/Spinner';
-import ListStack from './ListStack';
+import ListScreen from '../screens/ListScreen/ListScreen';
 
 const TabStack = createBottomTabNavigator<NavigatorRootStackParamListType>();
 
@@ -43,7 +43,7 @@ const RootStack = () => {
           descriptors={props.descriptors}
         />
       )}>
-      <TabStack.Screen name="List" component={ListStack} />
+      <TabStack.Screen name="List" component={ListScreen} />
       <TabStack.Screen name="Home" component={HomeScreen} />
       <TabStack.Screen name="Profile" component={ProfileScreen} />
     </TabStack.Navigator>

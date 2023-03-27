@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { FlatList, Image, SafeAreaView, View } from 'react-native';
+import { Image, SafeAreaView, ScrollView, View } from 'react-native';
 import createStyles from './SingleScreen.style';
 import Text from '../../components/Text/Text';
 import { useThemeAwareObject } from '../../theme/useThemeAwareObject';
@@ -24,7 +24,8 @@ const SingleScreen = () => {
     (async () => {
       await getCurrentCharacter(+id);
     })();
-  }, [getCurrentCharacter, id]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [id]);
 
   if (currentCharacter?.id !== +id) {
     return (
@@ -35,11 +36,8 @@ const SingleScreen = () => {
   }
 
   return (
-    <SafeAreaView style={styles.container}>
-      <Text isHeader style={styles.marginContent}>
-        {currentCharacter.name}
-      </Text>
-      <View style={styles.mainContainer}>
+    <ScrollView style={styles.container}>
+      <View style={[styles.mainContainer, styles.marginContent]}>
         <Image
           style={styles.imageSection}
           source={{ uri: currentCharacter.image }}
@@ -56,14 +54,17 @@ const SingleScreen = () => {
           </View>
           <View style={styles.marginSection}>
             <Text style={styles.subTitle}>Episodes:</Text>
-            <FlatList
-              data={currentEpisodes}
-              renderItem={({ item }) => <Text>{item.name}</Text>}
-            />
+            {currentEpisodes.map(item => (
+              <View key={item.id} style={styles.episodeContainer}>
+                <Text>{item.episode}</Text>
+                <Text> - </Text>
+                <Text>{item.name}</Text>
+              </View>
+            ))}
           </View>
         </View>
       </View>
-    </SafeAreaView>
+    </ScrollView>
   );
 };
 

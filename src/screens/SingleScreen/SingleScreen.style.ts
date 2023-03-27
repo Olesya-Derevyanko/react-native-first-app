@@ -23,6 +23,11 @@ const createStyles = (theme: Theme) => {
       margin: 20,
     },
 
+    episodeContainer: {
+      display: 'flex',
+      flexDirection: 'row',
+    },
+
     imageSection: {
       flex: 1,
       borderRadius: 25,

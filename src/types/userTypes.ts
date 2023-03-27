@@ -18,6 +18,18 @@ export type FormSignUpType = {
   repeatPassword: string;
 };
 
+export type FormResetPassType = {
+  oldPassword: string;
+  password: string;
+  repeatPassword: string;
+};
+
+export type FormUserType = {
+  name: string;
+  email: string;
+  dob: Date;
+};
+
 export type FormSignInType = {
   login: string;
   password: string;

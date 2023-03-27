@@ -6,16 +6,30 @@ const createStyles = (theme: Theme) => {
     container: {
       backgroundColor: theme.colors.backgroundInput,
       alignItems: 'center',
-      alignSelf: 'center',
+      alignSelf: 'stretch',
       flexDirection: 'row',
-      paddingTop: 10,
+      paddingTop: 55,
       paddingBottom: 15,
 
-      shadowOffset: { width: 0, height: -10 },
+      shadowOffset: { width: 0, height: 10 },
       shadowColor: theme.colors.default,
       shadowOpacity: 0.1,
       shadowRadius: 10,
     },
+    mainContainer: {
+      flex: 1,
+      alignSelf: 'center',
+      display: 'flex',
+      flexDirection: 'row',
+      justifyContent: 'space-between',
+    },
+
+    title: {
+      alignSelf: 'center',
+      fontSize: 25,
+      fontWeight: '700',
+    },
+
     tabSectionActive: {
       zIndex: 500,
       flex: 1,
@@ -30,6 +44,11 @@ const createStyles = (theme: Theme) => {
     activeIcon: {
       color: theme.colors.primary,
     },
+    plug: {
+      width: 35,
+      height: 35,
+    },
+
     inactiveIcon: {
       color: theme.colors.default,
     },

@@ -1,6 +1,12 @@
 import { useAppDispatch, useAppSelector } from '../store/hooks';
 import { logoutUser, setActualUser } from '../store/user/userSlice';
-import { FormSignInType, FormSignUpType, UserType } from '../types/userTypes';
+import {
+  FormResetPassType,
+  FormSignInType,
+  FormSignUpType,
+  FormUserType,
+  UserType,
+} from '../types/userTypes';
 import { AsyncStorageItem } from '../utils/AsyncStorageHelper';
 
 export const usersStorage = new AsyncStorageItem<UserType[]>('users');
@@ -24,8 +30,8 @@ export const useCurrentUser = () => {
       password,
     };
     users.push(newUser);
-    usersStorage.set(users);
-    authorizedUserStorage.set(login);
+    await usersStorage.set(users);
+    await authorizedUserStorage.set(login);
     dispatch(setActualUser(newUser));
   };
 
@@ -69,7 +75,53 @@ export const useCurrentUser = () => {
       throw new Error('User not found');
     }
     users[userIndex].avatar = uri;
-    usersStorage.set(users);
+    await usersStorage.set(users);
+    dispatch(setActualUser(users[userIndex]));
+  };
+
+  const deleteUser = async () => {
+    await authorizedUserStorage.remove();
+    const users: UserType[] = (await usersStorage.get()) || [];
+    const newUsers = users.filter(item => item.login !== currentUser.login);
+    await usersStorage.set(newUsers);
+    dispatch(logoutUser());
+  };
+
+  const resetPassword = async (value: FormResetPassType) => {
+    const users: UserType[] = (await usersStorage.get()) || [];
+    const userIndex = users.findIndex(item => item.login === currentUser.login);
+    if (userIndex === -1) {
+      throw new Error('User not found');
+    }
+    if (users[userIndex].password !== value.oldPassword) {
+      throw new Error('Incorrect old password');
+    }
+    users[userIndex].password = value.password;
+
+    await usersStorage.set(users);
+    dispatch(setActualUser(users[userIndex]));
+  };
+
+  const changeInfo = async (value: FormUserType) => {
+    const users: UserType[] = (await usersStorage.get()) || [];
+    const userIndex = users.findIndex(item => item.login === currentUser.login);
+    if (userIndex === -1) {
+      throw new Error('User not found');
+    }
+    if (value.name) {
+      users[userIndex].name = value.name;
+    }
+    if (value.email) {
+      users[userIndex].email = value.email;
+    }
+    if (
+      value.dob !== new Date() &&
+      value.dob !== new Date(0) &&
+      value.dob !== currentUser.dob
+    ) {
+      users[userIndex].dob = value.dob;
+    }
+    await usersStorage.set(users);
     dispatch(setActualUser(users[userIndex]));
   };
 
@@ -77,8 +129,11 @@ export const useCurrentUser = () => {
     signIn,
     signUp,
     logout,
+    deleteUser,
     checkAuthorized,
     changeAvatar,
     currentUser,
+    resetPassword,
+    changeInfo,
   };
 };

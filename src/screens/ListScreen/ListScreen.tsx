@@ -20,7 +20,7 @@ const ListScreen = () => {
       <Text isHeader>Rick and Morty</Text>
       <FlatList
         data={currentCharacters}
-        renderItem={item => <ListItem person={item.item} />}
+        renderItem={item => <ListItem key={item.index} person={item.item} />}
         ListFooterComponent={<Spinner />}
         onEndReached={downloadCurrentItems}
       />

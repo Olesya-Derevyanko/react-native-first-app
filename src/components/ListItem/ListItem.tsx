@@ -22,7 +22,10 @@ const ListItem: FC<IProps> = ({ person, ...touchableProps }) => {
     useNavigation<NavigationProp<NavigatorRootStackParamListType>>();
 
   const onPressItem = () => {
-    navigation.navigate('SingleCharacter', { id: person.id });
+    navigation.navigate('SingleCharacter', {
+      id: person.id,
+      name: person.name,
+    });
   };
   const styles = useThemeAwareObject(createStyles);
   return (

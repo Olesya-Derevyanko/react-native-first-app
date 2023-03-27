@@ -15,6 +15,13 @@ const createStyles = (theme: Theme) => {
       justifyContent: 'space-between',
     },
 
+    centerSection: {
+      paddingTop: 25,
+      display: 'flex',
+      flexDirection: 'row',
+      justifyContent: 'center',
+    },
+
     lastSection: {
       display: 'flex',
       flexDirection: 'row',

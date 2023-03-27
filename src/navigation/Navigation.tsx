@@ -6,6 +6,8 @@ import AuthStack from './AuthStack';
 import RootStack from './RootStack';
 import Spinner from '../components/Spinner/Spinner';
 import { useCurrentUser } from '../hooks/useCurrentUser';
+import SingleScreen from '../screens/SingleScreen/SingleScreen';
+import Header from './Header/Header';
 
 const Stack = createNativeStackNavigator<NavigatorRootStackParamListType>();
 
@@ -29,14 +31,40 @@ const Navigation = () => {
 
   return (
     <NavigationContainer>
-      <Stack.Navigator
-        screenOptions={{
-          headerShown: false,
-        }}>
+      <Stack.Navigator>
         {currentUser.login ? (
-          <Stack.Screen name="Root" component={RootStack} />
+          <>
+            <Stack.Screen
+              options={{
+                headerShown: false,
+              }}
+              name="Root"
+              component={RootStack}
+            />
+            <Stack.Screen
+              name="SingleCharacter"
+              component={SingleScreen}
+              options={{
+                title: 'Detailed information',
+                header: props => (
+                  <Header
+                    back={props.back}
+                    navigation={props.navigation}
+                    options={props.options}
+                    route={props.route}
+                  />
+                ),
+              }}
+            />
+          </>
         ) : (
-          <Stack.Screen name="AuthStack" component={AuthStack} />
+          <Stack.Screen
+            options={{
+              headerShown: false,
+            }}
+            name="AuthStack"
+            component={AuthStack}
+          />
         )}
       </Stack.Navigator>
     </NavigationContainer>

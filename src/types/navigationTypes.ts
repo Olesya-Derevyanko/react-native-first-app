@@ -6,5 +6,11 @@ export type NavigatorRootStackParamListType = {
   List: undefined;
   Profile: undefined;
   Root: undefined;
-  SingleCharacter: { id: number };
+  ArrayCharacter: undefined;
+  SingleCharacter: SingleCharacterType;
+};
+
+export type SingleCharacterType = {
+  id: number;
+  name: string;
 };

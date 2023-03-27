@@ -40,23 +40,23 @@ const UserScreen = () => {
           </TouchableOpacity>
         </View>
         {currentUser.name && (
-          <View>
+          <View style={styles.infoSection}>
             <Text>Name: </Text>
             <Text>{currentUser.name}</Text>
           </View>
         )}
 
         {currentUser.email && (
-          <View>
+          <View style={styles.infoSection}>
             <Text>Email: </Text>
             <Text>{currentUser.email}</Text>
           </View>
         )}
 
         {currentUser.dob && (
-          <View>
+          <View style={styles.infoSection}>
             <Text>Date of birth: </Text>
-            <Text>{currentUser.dob?.toDateString()}</Text>
+            {/* <Text>{currentUser.dob?.toDateString()}</Text> */}
           </View>
         )}
       </ScrollView>

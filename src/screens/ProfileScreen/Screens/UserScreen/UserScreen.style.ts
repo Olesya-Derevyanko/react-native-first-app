@@ -9,6 +9,12 @@ const createStyles = (theme: Theme) => {
       justifyContent: 'center',
     },
 
+    infoSection: {
+      display: 'flex',
+      flexDirection: 'row',
+      marginVertical: 10,
+    },
+
     infoArea: {
       flex: 1,
       alignItems: 'center',

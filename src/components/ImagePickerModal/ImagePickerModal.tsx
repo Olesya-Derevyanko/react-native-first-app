@@ -14,6 +14,7 @@ import Button from '../Button/Button';
 import createStyles from './ImagePickerModal.style';
 import CameraIcon from '../../assets/icons/camera.svg';
 import { useCurrentUser } from '../../hooks/useCurrentUser';
+import setNotifier from '../Notifier/Notifier';
 
 interface IProps {
   isVisible: boolean;
@@ -65,7 +66,13 @@ const ImagePickerModal: FC<IProps> = ({ isVisible, onClose }) => {
         await changeAvatar(uri);
       }
     } catch (error) {
-      console.error(error);
+      if (error instanceof Error) {
+        setNotifier({
+          title: error.message,
+          description: '',
+          alertType: 'error',
+        });
+      }
     } finally {
       onClose();
     }
