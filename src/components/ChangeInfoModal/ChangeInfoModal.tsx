@@ -37,7 +37,6 @@ const ChangeInfoModal: FC<IProps> = ({ isVisible, onClose }) => {
 
   const onPressSaveChanges = async (data: FormUserType) => {
     try {
-      console.log(currentUser.dob);
       await changeInfo(data);
       onClose();
       setNotifier({

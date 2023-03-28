@@ -4,10 +4,10 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { NavigatorRootStackParamListType } from '../types/navigationTypes';
 import AuthStack from './AuthStack';
 import RootStack from './RootStack';
-import Spinner from '../components/Spinner/Spinner';
 import { useCurrentUser } from '../hooks/useCurrentUser';
 import SingleScreen from '../screens/SingleScreen/SingleScreen';
 import Header from './Header/Header';
+import RNBootSplash from 'react-native-bootsplash';
 
 const Stack = createNativeStackNavigator<NavigatorRootStackParamListType>();
 
@@ -16,21 +16,17 @@ const Navigation = () => {
   const { checkAuthorized, currentUser } = useCurrentUser();
 
   useEffect(() => {
-    (async () => {
+    const init = async () => {
       await checkAuthorized();
       if (isLoading) {
         setIsLoading(false);
       }
-    })();
-    // init().finally(() => {
-    //   RNBootSplash.hide({ fade: true });
-    // });
+    };
+    init().finally(() => {
+      RNBootSplash.hide({ fade: true });
+    });
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
-
-  if (isLoading) {
-    return <Spinner />;
-  }
 
   return (
     <NavigationContainer>
