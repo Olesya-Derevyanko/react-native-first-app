@@ -1,4 +1,4 @@
-import { FC, useEffect } from 'react';
+import { FC } from 'react';
 import React from 'react';
 import { SafeAreaView, View } from 'react-native';
 import Modal from 'react-native-modal/dist/modal';
@@ -25,30 +25,19 @@ const ChangeInfoModal: FC<IProps> = ({ isVisible, onClose }) => {
   const styles = useThemeAwareObject(createStyles);
   const { changeInfo, currentUser } = useCurrentUser();
   const { currentTheme } = useCurrentTheme();
-  const {
-    control,
-    handleSubmit,
-    reset,
-    formState: { defaultValues },
-  } = useForm<FormUserType>({
+  const { control, handleSubmit } = useForm<FormUserType>({
     mode: 'all',
     resolver: yupResolver(userSchema),
     defaultValues: {
       name: currentUser.name,
       email: currentUser.email,
-      dob: currentUser.dob || new Date(0),
+      dob: new Date(currentUser.dob || 0),
     },
   });
 
-  useEffect(() => {
-    return () => {
-      reset(defaultValues);
-    };
-  }, [defaultValues, reset, isVisible]);
-
   const onPressSaveChanges = async (data: FormUserType) => {
     try {
-      console.log(data);
+      console.log(currentUser.dob);
       await changeInfo(data);
       onClose();
       setNotifier({

@@ -22,8 +22,11 @@ const Navigation = () => {
         setIsLoading(false);
       }
     })();
+    // init().finally(() => {
+    //   RNBootSplash.hide({ fade: true });
+    // });
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [isLoading]);
+  }, []);
 
   if (isLoading) {
     return <Spinner />;

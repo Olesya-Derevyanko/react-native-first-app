@@ -18,6 +18,13 @@ const UserScreen = () => {
   const { currentUser } = useCurrentUser();
   const styles = useThemeAwareObject(createStyles);
   const [visible, setVisible] = useState(false);
+  const currentDate = currentUser.dob
+    ? new Date(currentUser.dob).toLocaleString('en-US', {
+        year: 'numeric',
+        month: 'long',
+        day: 'numeric',
+      })
+    : null;
 
   return (
     <SafeAreaView style={styles.container}>
@@ -53,10 +60,10 @@ const UserScreen = () => {
           </View>
         )}
 
-        {currentUser.dob && (
+        {currentDate && (
           <View style={styles.infoSection}>
             <Text>Date of birth: </Text>
-            {/* <Text>{currentUser.dob?.toDateString()}</Text> */}
+            <Text>{currentDate}</Text>
           </View>
         )}
       </ScrollView>
