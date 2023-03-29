@@ -1,12 +1,7 @@
-import { FC, useCallback, useState } from 'react';
+import { FC, useState } from 'react';
 import React from 'react';
 import { Image, SafeAreaView, View } from 'react-native';
-import {
-  ImageLibraryOptions,
-  launchImageLibrary,
-  CameraOptions,
-  launchCamera,
-} from 'react-native-image-picker';
+import { launchImageLibrary, launchCamera } from 'react-native-image-picker';
 import Modal from 'react-native-modal/dist/modal';
 import { useThemeAwareObject } from '../../theme/useThemeAwareObject';
 import Button from '../Button/Button';
@@ -14,7 +9,7 @@ import Button from '../Button/Button';
 import createStyles from './ImagePickerModal.style';
 import CameraIcon from '../../assets/icons/camera.svg';
 import { useCurrentUser } from '../../hooks/useCurrentUser';
-import setNotifier from '../Notifier/Notifier';
+import setNotifier from '../../utils/notifierHelper';
 
 interface IProps {
   isVisible: boolean;
@@ -38,27 +33,31 @@ const ImagePickerModal: FC<IProps> = ({ isVisible, onClose }) => {
     { assets: [] },
   );
 
-  const changePicker = useCallback((value: any) => {
+  const changePicker = (value: any) => {
     setPickerResponse(value);
-  }, []);
+  };
 
-  const onImageLibraryPress = useCallback(() => {
-    const options: ImageLibraryOptions = {
-      selectionLimit: 1,
-      mediaType: 'photo',
-      includeBase64: true,
-    };
-    launchImageLibrary(options, changePicker);
-  }, [changePicker]);
+  const onImageLibraryPress = () => {
+    launchImageLibrary(
+      {
+        selectionLimit: 1,
+        mediaType: 'photo',
+        includeBase64: true,
+      },
+      changePicker,
+    );
+  };
 
-  const onCameraPress = useCallback(() => {
-    const options: CameraOptions = {
-      saveToPhotos: true,
-      mediaType: 'photo',
-      includeBase64: true,
-    };
-    launchCamera(options, changePicker);
-  }, [changePicker]);
+  const onCameraPress = () => {
+    launchCamera(
+      {
+        saveToPhotos: true,
+        mediaType: 'photo',
+        includeBase64: true,
+      },
+      changePicker,
+    );
+  };
 
   const onPressSaveImage = async () => {
     try {

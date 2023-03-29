@@ -7,7 +7,7 @@ import Button from '../Button/Button';
 
 import createStyles from './ResetPasswordModal.style';
 import { useCurrentUser } from '../../hooks/useCurrentUser';
-import setNotifier from '../Notifier/Notifier';
+import setNotifier from '../../utils/notifierHelper';
 import Input from '../Input/Input';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { useForm, Controller } from 'react-hook-form';
@@ -80,7 +80,7 @@ const ResetPasswordModal: FC<IProps> = ({ isVisible, onClose }) => {
               <Input
                 textValue={value}
                 onChangeText={onChange}
-                placeHolder="Old password"
+                label="Old password"
                 error={error?.message}
                 onBlur={onBlur}
                 isPassword
@@ -99,7 +99,7 @@ const ResetPasswordModal: FC<IProps> = ({ isVisible, onClose }) => {
               <Input
                 textValue={value}
                 onChangeText={onChange}
-                placeHolder="Password"
+                label="Password"
                 error={error?.message}
                 onBlur={onBlur}
                 isPassword
@@ -118,7 +118,7 @@ const ResetPasswordModal: FC<IProps> = ({ isVisible, onClose }) => {
               <Input
                 textValue={value}
                 onChangeText={onChange}
-                placeHolder="Repeat password"
+                label="Repeat password"
                 error={error?.message}
                 onBlur={onBlur}
                 isPassword

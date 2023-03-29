@@ -16,7 +16,7 @@ import { useThemeAwareObject } from '../../theme/useThemeAwareObject';
 
 interface IProps extends TextInputProps {
   textValue: string;
-  placeHolder: string;
+  label: string;
   error?: string;
   onBlur?: Noop;
   type?: KeyboardTypeOptions;
@@ -28,7 +28,7 @@ const Input: FC<IProps> = props => {
   const {
     textValue,
     onChangeText,
-    placeHolder,
+    label,
     error,
     type,
     isPassword,
@@ -64,7 +64,7 @@ const Input: FC<IProps> = props => {
   return (
     <View style={styles.inputContainer}>
       <View style={styles.textSection}>
-        <Text>{placeHolder}</Text>
+        <Text>{label}</Text>
       </View>
       <View style={styles.section}>
         <TextInput

@@ -1,8 +1,8 @@
 import React from 'react';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { NavigatorRootStackParamListType } from '../types/navigationTypes';
-import SignInScreen from '../screens/SignInScreen/SignInScreen';
-import SignUpScreen from '../screens/SignUpScreen/SignUpScreen';
+import SignInScreen from '../screens/auth/SignInScreen/SignInScreen';
+import SignUpScreen from '../screens/auth/SignUpScreen/SignUpScreen';
 
 const Stack = createNativeStackNavigator<NavigatorRootStackParamListType>();
 

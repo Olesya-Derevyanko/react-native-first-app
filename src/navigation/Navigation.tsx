@@ -5,8 +5,6 @@ import { NavigatorRootStackParamListType } from '../types/navigationTypes';
 import AuthStack from './AuthStack';
 import RootStack from './RootStack';
 import { useCurrentUser } from '../hooks/useCurrentUser';
-import SingleScreen from '../screens/SingleScreen/SingleScreen';
-import Header from './Header/Header';
 import RNBootSplash from 'react-native-bootsplash';
 
 const Stack = createNativeStackNavigator<NavigatorRootStackParamListType>();
@@ -32,30 +30,13 @@ const Navigation = () => {
     <NavigationContainer>
       <Stack.Navigator>
         {currentUser.login ? (
-          <>
-            <Stack.Screen
-              options={{
-                headerShown: false,
-              }}
-              name="Root"
-              component={RootStack}
-            />
-            <Stack.Screen
-              name="SingleCharacter"
-              component={SingleScreen}
-              options={{
-                title: 'Detailed information',
-                header: props => (
-                  <Header
-                    back={props.back}
-                    navigation={props.navigation}
-                    options={props.options}
-                    route={props.route}
-                  />
-                ),
-              }}
-            />
-          </>
+          <Stack.Screen
+            options={{
+              headerShown: false,
+            }}
+            name="Root"
+            component={RootStack}
+          />
         ) : (
           <Stack.Screen
             options={{

@@ -7,7 +7,7 @@ import Button from '../Button/Button';
 
 import createStyles from './ChangeInfoModal.style';
 import { useCurrentUser } from '../../hooks/useCurrentUser';
-import setNotifier from '../Notifier/Notifier';
+import setNotifier from '../../utils/notifierHelper';
 import Input from '../Input/Input';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { useForm, Controller } from 'react-hook-form';
@@ -72,7 +72,7 @@ const ChangeInfoModal: FC<IProps> = ({ isVisible, onClose }) => {
               <Input
                 textValue={value}
                 onChangeText={onChange}
-                placeHolder="Name"
+                label="Name"
                 error={error?.message}
                 onBlur={onBlur}
               />
@@ -90,7 +90,7 @@ const ChangeInfoModal: FC<IProps> = ({ isVisible, onClose }) => {
               <Input
                 textValue={value}
                 onChangeText={onChange}
-                placeHolder="Email"
+                label="Email"
                 error={error?.message}
                 onBlur={onBlur}
               />
