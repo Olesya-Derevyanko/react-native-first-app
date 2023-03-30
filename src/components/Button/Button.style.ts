@@ -17,6 +17,7 @@ const createStyles = (theme: Theme) => {
     },
 
     buttonText: {
+      fontFamily: 'NotoSans-Black',
       color: theme.colors.buttonTextColor,
       fontSize: 18,
       fontWeight: '800',

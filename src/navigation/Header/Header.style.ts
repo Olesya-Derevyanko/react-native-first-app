@@ -25,6 +25,7 @@ const createStyles = (theme: Theme) => {
     },
 
     title: {
+      fontFamily: 'NotoSans-Black',
       alignSelf: 'center',
       fontSize: 25,
       fontWeight: '700',

@@ -44,6 +44,7 @@ const createStyles = (theme: Theme) => {
     },
 
     title: {
+      fontFamily: 'NotoSans-Black',
       fontSize: 19,
       fontWeight: '700',
     },

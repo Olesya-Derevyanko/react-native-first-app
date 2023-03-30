@@ -34,7 +34,7 @@ const Navigation = () => {
             options={{
               headerShown: false,
             }}
-            name="Root"
+            name="RootStack"
             component={RootStack}
           />
         ) : (

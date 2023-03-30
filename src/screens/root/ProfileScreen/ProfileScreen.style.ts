@@ -28,6 +28,7 @@ const createStyles = (theme: Theme) => {
     },
 
     tabText: {
+      fontFamily: 'NotoSans-Black',
       color: theme.colors.textColor,
       textTransform: 'capitalize',
       fontSize: 15,

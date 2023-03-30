@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import Navigation from '../navigation/Navigation';
-import { SafeAreaView, StatusBar } from 'react-native';
+import { Platform, SafeAreaView, StatusBar } from 'react-native';
 import { useCurrentTheme } from '../hooks/useCurrentTheme';
 import { DEFAULT_DARK_THEME } from '../theme/darkTheme';
 import { DEFAULT_LIGHT_THEME } from '../theme/lightTheme';
@@ -40,6 +40,7 @@ const Core = () => {
       }>
       <StatusBar
         translucent
+        hidden={Platform.OS !== 'ios'}
         barStyle={currentTheme === 'dark' ? 'light-content' : 'dark-content'}
       />
       <NotifierWrapper>

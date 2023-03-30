@@ -20,6 +20,7 @@ const createStyles = (theme: Theme) => {
     },
 
     subTitle: {
+      fontFamily: 'NotoSans-Black',
       fontSize: 16,
       fontWeight: '800',
       textTransform: 'uppercase',

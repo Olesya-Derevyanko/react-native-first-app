@@ -5,7 +5,8 @@ export type NavigatorRootStackParamListType = {
   Home: undefined;
   List: undefined;
   Profile: undefined;
-  Root: undefined;
+  RootStack: undefined;
+  TabNavigation: undefined;
   ArrayCharacter: undefined;
   SingleCharacter: SingleCharacterType;
 };

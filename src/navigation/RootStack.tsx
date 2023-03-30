@@ -14,7 +14,7 @@ const RootStack = () => {
         options={{
           headerShown: false,
         }}
-        name="Root"
+        name="TabNavigation"
         component={TabNavigation}
       />
       <Stack.Screen

@@ -31,6 +31,7 @@ const createStyles = (theme: Theme) => {
     },
 
     errorText: {
+      fontFamily: 'NotoSans-Black',
       color: theme.colors.error,
       fontSize: 12,
     },
